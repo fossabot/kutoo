@@ -1,0 +1,175 @@
+{
+    "clip": "151.54.76.76",
+    "sig": "4b3f75713e021262238f229dfc6dd97e97f269140cdc16e220b429c690e32581",
+    "vt": "394f4e1eddd6e6684c372b0b45ffa9a2",
+    "user": null,
+    "ax": {
+        "3": "<iframe src=\"https:\/\/www.kickassanime.rs\/homeside1\/\" height=\"300\" scrolling=\"no\"><\/iframe>",
+        "5": "<iframe src=\"https:\/\/www.kickassanime.rs\/codea\/720x90.html\" height=\"100\" width=\"720\" scrolling=\"no\"><\/iframe>",
+        "405": "<iframe src=\"https:\/\/www.kickassanime.rs\/codea\/300x100_v2.html\" width=\"300\" height=\"110\" scrolling=\"no\" ><\/iframe>",
+        "20": "<iframe src=\"https:\/\/www.kickassanime.rs\/sider3rigt\/\" height=\"300\" scrolling=\"no\"><\/iframe>",
+        "31": "<iframe src=\"https:\/\/www.kickassanime.rs\/codea\/720x90_v2.html\" width=\"720\" height=\"100\" scrolling=\"no\"><\/iframe>",
+        "431": "<iframe src=\"https:\/\/www.kickassanime.rs\/codea\/300x100.html\" width=\"300\" height=\"110\" scrolling=\"no\" ><\/iframe>",
+        "35": "<iframe src=\"https:\/\/www.kickassanime.rs\/sider3rigt\/\" height=\"300\" scrolling=\"no\"><\/iframe>",
+        "300": "<iframe src=\"https:\/\/www.kickassanime.rs\/codea\/300x250_v3.html\" height=\"300\" scrolling=\"no\"><\/iframe>",
+        "301": "<iframe src=\"https:\/\/www.kickassanime.rs\/codea\/300x250_v2.html\" height=\"300\" scrolling=\"no\"><\/iframe>"
+    },
+    "notes": {
+        "adblock": "Do you want KAA to stay online?, then consider white-listing the website in your adblocker to help it stay. Much love, your KAA team",
+        "notes": "- Consider white-listing the website in your adblocker.\r\n- Join our <mark>NEW DISCORD channel<\/mark> by clicking the link <a href=\"https:\/\/discord.gg\/bCxPsSp\" target=\"_blank\" style=\" font-weight: bold; color: #ef091f; \">https:\/\/discord.gg\/bCxPsSp<\/a>\r\n- Don't hesitate to use our domain shortcut <a href=\"https:\/\/www.kaa.si\/\" target=\"_blank\" style=\" font-weight: bold; color: #ef091f; \">KAA.si<\/a>\r\n- Join our official <a href=\"https:\/\/www.reddit.com\/r\/KickAssAnime\/\" target=\"_blank\" style=\" font-weight: bold;  color: #ef091f; \">Subreddit<\/a>"
+    },
+    "anime": {
+        "name": "RWBY Volume 6",
+        "en_title": null,
+        "slug": "rwby-volume-6",
+        "slug_id": "769679",
+        "description": "Season 6  of RWBY",
+        "status": "Finished Airing",
+        "image": "1539096700.jpg",
+        "banner": null,
+        "startdate": "2018-10-27",
+        "enddate": "2019-01-26",
+        "broadcast_day": "saturday",
+        "broadcast_time": "",
+        "source": "",
+        "duration": "22 min.",
+        "alternate": [
+            "RWBY Season 6",
+            " Ruby 6",
+            " RWBY"
+        ],
+        "type": "TV Series,Fall 2018",
+        "episodes": [
+            {
+                "epnum": "Episode 13",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-13-615799",
+                "createddate": "2019-01-26 11:08:49",
+                "num": "13"
+            },
+            {
+                "epnum": "Episode 12",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-12-881680",
+                "createddate": "2019-01-19 11:07:34",
+                "num": "12"
+            },
+            {
+                "epnum": "Episode 11",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-11-787311",
+                "createddate": "2019-01-12 11:07:23",
+                "num": "11"
+            },
+            {
+                "epnum": "Episode 10",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-10-528655",
+                "createddate": "2019-01-05 11:52:26",
+                "num": "10"
+            },
+            {
+                "epnum": "Episode 09",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-09-997439",
+                "createddate": "2018-12-29 11:07:18",
+                "num": "9"
+            },
+            {
+                "epnum": "Episode 08",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-08-774237",
+                "createddate": "2018-12-15 11:08:05",
+                "num": "8"
+            },
+            {
+                "epnum": "Episode 07",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-07-692367",
+                "createddate": "2018-12-08 11:08:32",
+                "num": "7"
+            },
+            {
+                "epnum": "Episode 06",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-06-864272",
+                "createddate": "2018-12-01 11:08:55",
+                "num": "6"
+            },
+            {
+                "epnum": "Episode 05",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-05-492758",
+                "createddate": "2018-11-24 11:09:38",
+                "num": "5"
+            },
+            {
+                "epnum": "Episode 04",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-04-748135",
+                "createddate": "2018-11-17 11:10:12",
+                "num": "4"
+            },
+            {
+                "epnum": "Episode 03",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-03-936314",
+                "createddate": "2018-11-10 11:05:40",
+                "num": "3"
+            },
+            {
+                "epnum": "Episode 02",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-02-949627",
+                "createddate": "2018-11-03 11:07:32",
+                "num": "2"
+            },
+            {
+                "epnum": "Episode 01",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/episode-01-528883",
+                "createddate": "2018-10-27 11:02:39",
+                "num": "1"
+            },
+            {
+                "epnum": "Preview",
+                "name": null,
+                "slug": "\/anime\/rwby-volume-6-769679\/preview-614824",
+                "createddate": "2018-10-17 23:59:24",
+                "num": "0"
+            }
+        ],
+        "types": [
+            {
+                "name": "TV Series",
+                "slug": "TV Series"
+            },
+            {
+                "name": "Fall 2018",
+                "slug": "Fall 2018"
+            }
+        ],
+        "genres": [
+            {
+                "name": "Sci-Fi",
+                "slug": "\/genre\/sci-fi"
+            },
+            {
+                "name": "Adventure",
+                "slug": "\/genre\/adventure"
+            },
+            {
+                "name": "Seinen",
+                "slug": "\/genre\/seinen"
+            },
+            {
+                "name": "Action",
+                "slug": "\/genre\/action"
+            }
+        ],
+        "aid": "5562",
+        "favorited": false,
+        "votes": 1141,
+        "rating": false
+    }
+}

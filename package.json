@@ -1,0 +1,24 @@
+{
+  "name": "animekit",
+  "version": "0.0.1",
+  "license": "MIT",
+  "dependencies": {
+    "@types/mkdirp": "^0.5.2",
+    "cheerio": "^1.0.0-rc.3",
+    "fluent-ffmpeg": "^2.1.2",
+    "m3u8-parser": "^4.4.0",
+    "mkdirp": "^0.5.1",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.15",
+    "@types/fluent-ffmpeg": "^2.1.12",
+    "@types/request-promise-native": "^1.0.17",
+    "typescript": "^3.7.4"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "main": "dist/index.js"
+}
