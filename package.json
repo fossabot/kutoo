@@ -5,7 +5,6 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "dependencies": {
-    "@types/mkdirp": "^0.5.2",
     "cheerio": "^1.0.0-rc.3",
     "fluent-ffmpeg": "^2.1.2",
     "m3u8-parser": "^4.4.0",
@@ -16,16 +15,21 @@
   "devDependencies": {
     "@types/cheerio": "^0.22.15",
     "@types/fluent-ffmpeg": "^2.1.12",
+    "@types/mkdirp": "^0.5.2",
     "@types/request-promise-native": "^1.0.17",
-    "typescript": "^3.7.4"
+    "fork-ts-checker-webpack-plugin": "^4.0.0-beta.4",
+    "pnp-webpack-plugin": "^1.5.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.4",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10"
   },
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build"
+    "build": "webpack --mode production",
+    "prepare": "build"
   },
   "repository": "https://github.com/FedericoMorrone/animekit.git",
   "author": "Federico Morrone <flickmor@gmail.com>",
-  "private": true,
   "files": [
     "lib/**/*"
   ]

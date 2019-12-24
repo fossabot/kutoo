@@ -5,7 +5,7 @@ async function getLinks(url: string) {
     let links: string[] = [];
     const $ = await requestPromise({
         uri: url,
-        transform: (body) => {
+        transform: (body: any) => {
             return cheerio.load(body);
         }
     });
@@ -21,7 +21,7 @@ async function getMagnets(url: string) {
 
     const $ = await requestPromise({
         uri: url,
-        transform: (body) => {
+        transform: (body: any) => {
             return cheerio.load(body);
         }
     });
