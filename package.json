@@ -2,6 +2,8 @@
   "name": "animekit",
   "version": "0.0.1",
   "license": "MIT",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "dependencies": {
     "@types/mkdirp": "^0.5.2",
     "cheerio": "^1.0.0-rc.3",
@@ -18,7 +20,13 @@
     "typescript": "^3.7.4"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepare": "npm run build"
   },
-  "main": "src/index.ts"
+  "repository": "https://github.com/FedericoMorrone/animekit.git",
+  "author": "Federico Morrone <flickmor@gmail.com>",
+  "private": true,
+  "files": [
+    "lib/**/*"
+  ]
 }
