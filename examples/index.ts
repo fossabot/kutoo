@@ -6,11 +6,12 @@ import animekit from '../src'
     // console.log(episodes)
 
     // let id = 571
-    // let episodes = await animekit.animeunity.getLinks(id)
-    // console.log(episodes)
+    // let links = await animekit.animeunity.getLinks(id)
+    // console.log(links)
+    // await animekit.animeunity.downloadFromLink(links[0], './temp/eps', (percent, name)=>{})
     
-    let url = 'https://nyaatorrent.com/anime/endro'
-    let episodes = await animekit.nyaatorrent.getLinks(url)
-    console.log(episodes)
+    // let url = 'https://nyaatorrent.com/anime/endro'
+    // let episodes = await animekit.nyaatorrent.getLinks(url)
+    // console.log(episodes)
 })()
 

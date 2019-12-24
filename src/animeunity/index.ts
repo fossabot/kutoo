@@ -4,6 +4,11 @@ import mkdirp from 'mkdirp';
 import requestPromise from 'request-promise-native'
 import request from 'request'
 
+/**
+ * Takes an id and return the correlated episodes links
+ * @param id - A valid id from animeunity
+ * @returns A promise with the episodes links
+ */
 async function getLinks(id: number) {
     let links: string[] = [];
     const $ = await requestPromise({
@@ -18,12 +23,18 @@ async function getLinks(id: number) {
     return links;
 }
 
-async function downloadFromLink(link: string, path: string, progressCallback: (percentage: number, name: string) => void) {
+/**
+ * Downloads the episode from a given link to a given path
+ * @param url A valid url to an animeunity episode
+ * @param path The path where to download the video
+ * @param progressCallback A callaback called each time the on data event is called
+ */
+async function downloadFromLink(url: string, path: string, progressCallback: (percentage: number, name: string) => void) {
 
     let titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > div.col-lg-4.col-sm-12.custom-padding-bottom > div > div.card-body.bg-light-gray > p:nth-child(2)'
 
     const $ = await requestPromise({
-        uri: link,
+        uri: url,
         transform: (body) => {
             return cheerio.load(body);
         }

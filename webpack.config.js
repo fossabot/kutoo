@@ -1,5 +1,7 @@
 const path = require('path');
-const webpack = require('webpack')
+const nodeExternals = require('webpack-node-externals');
+const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     mode: 'production',
@@ -21,8 +23,13 @@ module.exports = {
         path: path.resolve(__dirname, 'lib'),
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env.FLUENTFFMPEG_COV': false
-        })
-    ]
+        new CleanWebpackPlugin(),
+
+        new TypedocWebpackPlugin({
+            out: path.resolve(__dirname, 'docs'),
+            tsconfig: './tsconfig.json',
+            theme: 'minimal'
+        }, './src'),
+    ],
+    externals: [nodeExternals()],
 };
