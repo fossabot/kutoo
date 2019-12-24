@@ -1,6 +1,6 @@
 {
   "name": "animekit",
-  "version": "0.0.1-c",
+  "version": "0.0.1-alpha",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -28,7 +28,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "prepare": "yarn build",
-    "version": "git add -A src",
+    "version": "git add -A .",
     "postversion": "git push && git push --tags"
   },
   "repository": "https://github.com/FedericoMorrone/animekit.git",
