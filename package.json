@@ -1,6 +1,6 @@
 {
   "name": "animekit",
-  "version": "0.0.1",
+  "version": "0.0.1-c",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -22,11 +22,14 @@
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.4",
     "webpack": "^4.41.4",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "yarn": "^1.21.1"
   },
   "scripts": {
     "build": "webpack --mode production",
-    "prepare": "build"
+    "prepare": "yarn build",
+    "version": "git add -A src",
+    "postversion": "git push && git push --tags"
   },
   "repository": "https://github.com/FedericoMorrone/animekit.git",
   "author": "Federico Morrone <flickmor@gmail.com>",
