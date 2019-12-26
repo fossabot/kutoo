@@ -6,7 +6,7 @@
         "target": "es6",
         "noImplicitAny": true,
         "moduleResolution": "node",
-        "outDir": "dist",
+        "outDir": "",
         "baseUrl": ".",
         "declaration": true,
         "paths": {
@@ -17,6 +17,6 @@
         }
     },
     "include": [
-        "src/**/*", "cli/src/**/*"
+        "src/**/*"
     ]
 }

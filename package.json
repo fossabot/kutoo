@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "bin": {
-    "animekit": "./dist/cli/cli.js"
+    "animekit": "./cli/cli.js"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
@@ -40,6 +40,6 @@
   "repository": "https://github.com/FedericoMorrone/animekit.git",
   "author": "Federico Morrone <flickmor@gmail.com>",
   "files": [
-    "lib/**/*"
+    "lib/**/*", "./cli/cli.js"
   ]
 }

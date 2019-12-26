@@ -20,7 +20,7 @@ const libraryConfig = {
         filename: 'animekit.js',
         library: 'animekit',
         libraryTarget: 'commonjs2',
-        path: path.resolve(__dirname, 'dist/lib'),
+        path: path.resolve(__dirname, 'lib'),
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -49,7 +49,7 @@ const cliConfig = {
     },
     output: {
         filename: 'cli.js',
-        path: path.resolve(__dirname, 'dist/cli'),
+        path: path.resolve(__dirname, 'cli'),
     },
     plugins: [
         new CleanWebpackPlugin(),
