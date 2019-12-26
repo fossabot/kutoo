@@ -6,7 +6,7 @@ import requestPromise from 'request-promise-native'
 async function setLanguageCookie(lang: string) {
     let cookieJar = requestPromise.jar();
 
-    const $ = await requestPromise({
+    const $ = await requestPromise.get({
         uri: 'https://www.crunchyroll.com/',
         jar: cookieJar,
         transform: (body) => {
@@ -18,7 +18,7 @@ async function setLanguageCookie(lang: string) {
     let tokenRegex = /(?<=\').{43}(?=\')/g
     let token = languageFunc.match(tokenRegex)[0]
 
-    await requestPromise({
+    await requestPromise.get({
         uri: 'https://www.crunchyroll.com/ajax/',
         method: 'post',
         jar: cookieJar,
@@ -40,7 +40,7 @@ async function getEpisodes(url: string) {
     let cookieJar = await setLanguageCookie('enUS')
     let seasons: any = {}
 
-    const $ = await requestPromise({
+    const $ = await requestPromise.get({
         uri: anime,
         jar: cookieJar,
         transform: (body) => {
@@ -65,7 +65,7 @@ async function getEpisodes(url: string) {
 async function getConfig(url: string) {
     let configRegex = /(?<=vilos.config.media\s=\s)(.*)(?=;)/
 
-    let data = await requestPromise(url)
+    let data = await requestPromise.get(url)
     let config = data.match(configRegex)
     let parsedConfig = JSON.parse(config[0])
     parsedConfig.metadata.episode_uri = url
@@ -116,7 +116,7 @@ async function downloadFromConfig(config: any, options: { resolution: string, ha
     })
 
     let parser = new Parser()
-    let streamUrl = await requestPromise(stream.url)
+    let streamUrl = await requestPromise.get(stream.url)
     parser.push(streamUrl)
     parser.end()
     let mainPlaylist = parser.manifest
