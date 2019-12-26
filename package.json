@@ -4,7 +4,9 @@
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "bin": "./cli/cli.js",
+  "bin": {
+    "animekit": "./dist/cli/cli.js"
+  },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "fluent-ffmpeg": "^2.1.2",

@@ -1,4 +1,4 @@
-import animekit from '../src'
+import animekit from '../src/lib'
 import fs from 'fs'
 
 (async () => {

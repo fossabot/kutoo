@@ -1,12 +1,11 @@
 const path = require('path');
-const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals');
 const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const libraryConfig = {
     mode: 'production',
-    entry: './src/index.ts',
+    entry: './src/lib/index.ts',
     target: 'node',
     module: {
         rules: [{
@@ -21,7 +20,7 @@ const libraryConfig = {
         filename: 'animekit.js',
         library: 'animekit',
         libraryTarget: 'commonjs2',
-        path: path.resolve(__dirname, 'lib'),
+        path: path.resolve(__dirname, 'dist/lib'),
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -50,11 +49,10 @@ const cliConfig = {
     },
     output: {
         filename: 'cli.js',
-        path: path.resolve(__dirname, 'cli'),
+        path: path.resolve(__dirname, 'dist/cli'),
     },
     plugins: [
         new CleanWebpackPlugin(),
-        new webpack.BannerPlugin({ banner: "#!/usr/bin/env node", raw: true }),
     ],
     externals: [nodeExternals()],
 };
