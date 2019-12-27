@@ -11,7 +11,7 @@ import request from 'request'
  */
 async function getLinks(id: number) {
     let links: string[] = [];
-    const $ = await requestPromise({
+    const $ = await requestPromise.get({
         uri: `https://www.animeunity.it/anime.php?id=${id.toString()}`,
         transform: (body) => {
             return cheerio.load(body);
@@ -33,7 +33,7 @@ async function downloadFromLink(url: string, path: string, progressCallback: (pe
 
     let titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > div.col-lg-4.col-sm-12.custom-padding-bottom > div > div.card-body.bg-light-gray > p:nth-child(2)'
 
-    const $ = await requestPromise({
+    const $ = await requestPromise.get({
         uri: url,
         transform: (body) => {
             return cheerio.load(body);
@@ -74,4 +74,21 @@ async function downloadFromLink(url: string, path: string, progressCallback: (pe
         .pipe(fs.createWriteStream(path + videoName))
 }
 
-export default {getLinks, downloadFromLink}
+async function updateLibrary(){
+    const $ = await requestPromise.get({
+        uri: 'https://animeunity.it/anime.php?c=archive&page=*',
+        transform: (body) => {
+            return cheerio.load(body);
+        }
+    });
+
+    let links: any = {}
+    $('.archive-card').each((i: number, card: any) => {
+        let link = $(card).find('a').attr('href')
+        let title = $(card).find('.card-title > b').text()
+        links[title] = `https://www.animeunity.it/${link}`
+    });
+    return links
+}
+
+export default {getLinks, downloadFromLink, updateLibrary}

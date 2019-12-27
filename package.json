@@ -4,6 +4,9 @@
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "bin": {
+    "animekit": "./cli/cli.js"
+  },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "fluent-ffmpeg": "^2.1.2",
@@ -26,8 +29,7 @@
     "typescript": "^3.7.4",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10",
-    "webpack-node-externals": "^1.7.2",
-    "yarn": "^1.21.1"
+    "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
     "build": "webpack --mode production",
@@ -38,6 +40,6 @@
   "repository": "https://github.com/FedericoMorrone/animekit.git",
   "author": "Federico Morrone <flickmor@gmail.com>",
   "files": [
-    "lib/**/*"
+    "lib/**/*", "./cli/cli.js"
   ]
 }

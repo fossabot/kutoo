@@ -3,9 +3,9 @@ const nodeExternals = require('webpack-node-externals');
 const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-module.exports = {
+const libraryConfig = {
     mode: 'production',
-    entry: './src/index.ts',
+    entry: './src/lib/index.ts',
     target: 'node',
     module: {
         rules: [{
@@ -33,3 +33,28 @@ module.exports = {
     ],
     externals: [nodeExternals()],
 };
+
+const cliConfig = {
+    mode: 'production',
+    entry: './src/cli/index.ts',
+    target: 'node',
+    module: {
+        rules: [{
+            test: /\.ts$/,
+            loader: require.resolve('ts-loader'),
+        }],
+    },
+    resolve: {
+        extensions: ['.ts', '.js'],
+    },
+    output: {
+        filename: 'cli.js',
+        path: path.resolve(__dirname, 'cli'),
+    },
+    plugins: [
+        new CleanWebpackPlugin(),
+    ],
+    externals: [nodeExternals()],
+};
+
+module.exports = [libraryConfig, cliConfig]

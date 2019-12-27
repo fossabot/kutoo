@@ -1,4 +1,5 @@
-import animekit from '../src'
+import animekit from '../src/lib'
+import fs from 'fs'
 
 (async () => {
     // let url = 'https://crunchyroll.com/rwby'
@@ -13,5 +14,8 @@ import animekit from '../src'
     // let url = 'https://nyaatorrent.com/anime/endro'
     // let episodes = await animekit.nyaatorrent.getLinks(url)
     // console.log(episodes)
-})()
 
+    let library = await animekit.animeunity.updateLibrary()
+    console.log(library)
+    fs.writeFileSync('./library.json', JSON.stringify(library))
+})()
