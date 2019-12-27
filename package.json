@@ -1,6 +1,6 @@
 {
   "name": "animekit",
-  "version": "0.0.1-alpha",
+  "version": "0.0.1-test-1b",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

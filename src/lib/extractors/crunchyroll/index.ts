@@ -72,7 +72,7 @@ async function getConfig(url: string) {
     return parsedConfig
 }
 
-async function downloadFromConfig(config: any, options: { resolution: string, hardsub: string, path?: string }, progressCallback?: (progress: any) => void) {
+async function downloadFromConfig(config: any, options: { resolution: string, hardsub: any, path?: string }, progressCallback?: (progress: any) => void) {
 
     if (options.hardsub === 'none') {
         options.hardsub = null

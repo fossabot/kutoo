@@ -64,7 +64,7 @@ async function downloadFromLink(url: string, path: string, progressCallback?: (p
             console.log(err);
         })
         .on('response', (data) => {
-            totalBytes = parseInt(data.headers['content-length']);
+            totalBytes = parseInt(data.headers['content-length']!);
         })
         .on('data', (chunk) => {
             if (progressCallback != undefined) {
