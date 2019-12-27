@@ -9,10 +9,10 @@ import request from 'request'
  * @param id - A valid id from animeunity
  * @returns A promise with the episodes links
  */
-async function getLinks(id: number) {
+async function getLinks(url: string) {
     let links: string[] = [];
     const $ = await requestPromise.get({
-        uri: `https://www.animeunity.it/anime.php?id=${id.toString()}`,
+        uri: url,
         transform: (body) => {
             return cheerio.load(body);
         }
@@ -29,7 +29,7 @@ async function getLinks(id: number) {
  * @param path The path where to download the video
  * @param progressCallback A callaback called each time the on data event is called
  */
-async function downloadFromLink(url: string, path: string, progressCallback: (percentage: number, name: string) => void) {
+async function downloadFromLink(url: string, path: string, progressCallback?: (percentage: number, name: string) => void) {
 
     let titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > div.col-lg-4.col-sm-12.custom-padding-bottom > div > div.card-body.bg-light-gray > p:nth-child(2)'
 
@@ -60,21 +60,23 @@ async function downloadFromLink(url: string, path: string, progressCallback: (pe
     let receivedBytes = 0
 
     request(videoURL)
-        .on('error',  (err) => {
+        .on('error', (err) => {
             console.log(err);
         })
         .on('response', (data) => {
             totalBytes = parseInt(data.headers['content-length']);
         })
-        .on('data',  (chunk) => {
-            receivedBytes += chunk.length;
-            let percentage = receivedBytes  / totalBytes;
-            progressCallback(percentage * 100, name)
+        .on('data', (chunk) => {
+            if (progressCallback != undefined) {
+                receivedBytes += chunk.length;
+                let percentage = receivedBytes / totalBytes;
+                progressCallback(percentage * 100, name)
+            }
         })
         .pipe(fs.createWriteStream(path + videoName))
 }
 
-async function updateLibrary(){
+async function updateLibrary() {
     const $ = await requestPromise.get({
         uri: 'https://animeunity.it/anime.php?c=archive&page=*',
         transform: (body) => {
@@ -91,4 +93,11 @@ async function updateLibrary(){
     return links
 }
 
-export default {getLinks, downloadFromLink, updateLibrary}
+async function downloadPlaylist(url: string, path: string) {
+    let links = await getLinks(url)
+    links.forEach(async (lnk) => {
+        await downloadFromLink(lnk, path)
+    })
+}
+
+export default { getLinks, downloadFromLink, updateLibrary, downloadPlaylist }

@@ -10,6 +10,7 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "fluent-ffmpeg": "^2.1.2",
+    "fuse.js": "^3.4.6",
     "m3u8-parser": "^4.4.0",
     "mkdirp": "^0.5.1",
     "request": "^2.88.0",
@@ -40,6 +41,7 @@
   "repository": "https://github.com/FedericoMorrone/animekit.git",
   "author": "Federico Morrone <flickmor@gmail.com>",
   "files": [
-    "lib/**/*", "./cli/cli.js"
+    "lib/**/*",
+    "./cli/cli.js"
   ]
 }

@@ -1,4 +1,4 @@
-import animekit from '../src/lib'
+import animekit from '../src/lib/'
 import fs from 'fs'
 
 (async () => {
@@ -15,7 +15,9 @@ import fs from 'fs'
     // let episodes = await animekit.nyaatorrent.getLinks(url)
     // console.log(episodes)
 
-    let library = await animekit.animeunity.updateLibrary()
-    console.log(library)
-    fs.writeFileSync('./library.json', JSON.stringify(library))
+    // let library = await animekit.animeunity.updateLibrary()
+    // console.log(library)
+    // fs.writeFileSync('./library.json', JSON.stringify(library))
+
+    // await animekit.download('https://www.animeunity.it/anime.php?id=571', './temp')
 })()
