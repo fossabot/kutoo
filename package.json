@@ -1,8 +1,8 @@
 {
   "name": "animekit",
-  "version": "0.0.1-test-1b",
+  "version": "0.0.1-test-2",
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "lib/animekit.js",
   "types": "lib/index.d.ts",
   "bin": {
     "animekit": "./cli/cli.js"
