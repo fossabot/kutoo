@@ -9,29 +9,23 @@ import request from 'request'
  * @param id - A valid id from animeunity
  * @returns A promise with the episodes links
  */
-async function getLinks(url: string) {
-    let links: string[] = [];
+
+async function getDirectLinks(url: string) {
     const $ = await requestPromise.get({
         uri: url,
         transform: (body) => {
             return cheerio.load(body);
         }
     });
-    $('.ep-box > a').each((i: number, el: any) => {
-        links.push(`https://www.animeunity.it/${$(el).attr('href')}`);
-    });
-    return links;
+
+    let src = $('#video-player > source').attr('src');
+    return src
 }
 
-/**
- * Downloads the episode from a given link to a given path
- * @param url A valid url to an animeunity episode
- * @param path The path where to download the video
- * @param progressCallback A callaback called each time the on data event is called
- */
-async function downloadFromLink(url: string, path: string, progressCallback?: (percentage: number, name: string) => void) {
-
-    let titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > div.col-lg-4.col-sm-12.custom-padding-bottom > div > div.card-body.bg-light-gray > p:nth-child(2)'
+async function getInfo(url: string) {
+    let info: any = {};
+    let titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > ' +
+        'div.col-lg-4.col-sm-12.custom-padding-bottom > div > div.card-body.bg-light-gray > p:nth-child(2)'
 
     const $ = await requestPromise.get({
         uri: url,
@@ -42,39 +36,31 @@ async function downloadFromLink(url: string, path: string, progressCallback?: (p
 
     let title = $(titleSelector).html()!.replace('<b>TITOLO: </b>', '').replace(/\s\s+/g, ' ').replace(/\s/, '')
 
-    let videoURL = $('#video-player > source').attr('src');
+    info = {
+        name: title,
+        description: '',
+        seasons: {
+            s1: {
+                name: title,
+                episodes: {
 
-    let name = videoURL.split('/')[videoURL.split('/').length - 1]
+                }
+            }
+        },
+    }
 
-    let videoName = videoURL.split('/')[videoURL.split('/').length - 1]
-    path = `${path}/${title.slice(0, -1).replace(/[\\\\/:*?\"<>|]/g, '')}/`
-
-
-    mkdirp(path, (err: Error) => {
-        if (err) {
-            console.error(err);
-        }
+    $('.ep-box > a').each((i: number, el: CheerioElement) => {
+        info.seasons['s1'].push(`https://www.animeunity.it/${$(el).attr('href')}`);
     });
 
-    let totalBytes = 0
-    let receivedBytes = 0
-
-    request(videoURL)
-        .on('error', (err) => {
-            console.log(err);
-        })
-        .on('response', (data) => {
-            totalBytes = parseInt(data.headers['content-length']!);
-        })
-        .on('data', (chunk) => {
-            if (progressCallback != undefined) {
-                receivedBytes += chunk.length;
-                let percentage = receivedBytes / totalBytes;
-                progressCallback(percentage * 100, name)
-            }
-        })
-        .pipe(fs.createWriteStream(path + videoName))
+    return info;
 }
+
+
+
+
+
+
 
 async function updateLibrary() {
     const $ = await requestPromise.get({
@@ -93,11 +79,4 @@ async function updateLibrary() {
     return links
 }
 
-async function downloadPlaylist(url: string, path: string) {
-    let links = await getLinks(url)
-    links.forEach(async (lnk) => {
-        await downloadFromLink(lnk, path)
-    })
-}
-
-export default { getLinks, downloadFromLink, updateLibrary, downloadPlaylist }
+export default { getInfo, updateLibrary }

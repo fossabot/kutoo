@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals');
 const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -53,7 +54,12 @@ const cliConfig = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        new webpack.BannerPlugin({ banner: "#!/usr/bin/env node", raw: true }),
     ],
+    stats: {
+        // Ignore warnings due to yarg's dynamic module loading
+        warningsFilter: [/node_modules\/yargs/]
+    },
     externals: [nodeExternals()],
 };
 

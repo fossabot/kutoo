@@ -144,5 +144,9 @@ async function downloadFromConfig(config: any, options: { resolution: string, ha
     command.run()
 }
 
-export default { getEpisodes, getConfig, downloadFromConfig }
+async function getInfo(url: string){
+    
+}
+
+export default { getInfo }
 

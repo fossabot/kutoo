@@ -19,5 +19,9 @@ import fs from 'fs'
     // console.log(library)
     // fs.writeFileSync('./library.json', JSON.stringify(library))
 
-    // await animekit.download('https://www.animeunity.it/anime.php?id=571', './temp')
+    let info = await animekit.crunchyroll.getInfo('https://www.animeunity.it/anime.php?id=571')
+    console.log(info)
+
+    // let links = await animekit.gogoanime.getLinks('https://gogoanime.video/category/enen-no-shouboutai')
+    // console.log(links)
 })()
