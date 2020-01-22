@@ -13,7 +13,7 @@ A desktop gui written in electron is avaible [`here`](https://github.com/Federic
 
 ## Getting Started
 
-Install Animekit using [`yarn`](https://yarnpkg.com/en/package/jest):
+Install Animekit using [`yarn`](https://yarnpkg.com/):
 
 ```bash
 yarn add animekit
