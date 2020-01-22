@@ -1,5 +1,3 @@
-import requestPromise from 'request-promise-native'
-import request from 'request'
 import cheerio from 'cheerio'
 
 async function getLinks(url:string){

@@ -1,83 +1,141 @@
 import cheerio from 'cheerio'
 import ffmpeg from 'fluent-ffmpeg'
+import got from 'got'
 import { Parser } from 'm3u8-parser'
-import requestPromise from 'request-promise-native'
 
-async function setLanguageCookie(lang: string) {
-    let cookieJar = requestPromise.jar();
+import { setLanguageCookie, getConfig } from './helper'
+import { Config } from './config'
 
-    const $ = await requestPromise.get({
-        uri: 'https://www.crunchyroll.com/',
-        jar: cookieJar,
-        transform: (body) => {
-            return cheerio.load(body);
-        }
-    });
+function isCompatible(url: string) {
+    let urlRegex = /^(http(s)?(:\/\/))?(www\.)?crunchyroll\.com(\/.*)?$/
+    return urlRegex.test(url)
 
-    let languageFunc = $('#footer_language_list > li:nth-child(1) > a').attr('onclick')
-    let tokenRegex = /(?<=\').{43}(?=\')/g
-    let token = languageFunc.match(tokenRegex)[0]
+}
 
-    await requestPromise.get({
-        uri: 'https://www.crunchyroll.com/ajax/',
-        method: 'post',
-        jar: cookieJar,
-        formData: {
-            req: "RpcApiTranslation_SetLang",
-            locale: lang,
-            _token: token
+
+async function getEpisodeInfo(url: string) {
+    let info: EpisodeInfo = {
+        url: url,
+        directUrl: '',
+        captions: {}
+    }
+    let config: Config = await getConfig(url)
+
+    config.streams.forEach((stream) => {
+        if (stream.format == 'multitrack_adaptive_hls_v2' && stream.hardsub_lang == null) {
+            info.directUrl = stream.url
         }
     })
 
-    return cookieJar
+    config.subtitles.forEach((sub) => {
+        info.captions[sub.language] = sub.url
+    })
+
+    return info
 }
 
-async function getEpisodes(url: string) {
+
+async function downloadEpisode(url: string, path: string, resolution: resolution, progressCallback: (progress: any) => void) {
+    let videoWidth: number
+    let videoHeight: number
+
+    switch (resolution) {
+        case 'fhd': case 'uhd':
+            videoWidth = 1920
+            videoHeight = 1080
+            break;
+        case 'hd':
+            videoWidth = 1280
+            videoHeight = 720
+            break;
+        case 'sd':
+            videoWidth = 848
+            videoHeight = 480
+            break;
+        case 'low':
+            videoWidth = 640
+            videoHeight = 360
+            break;
+        case 'ulow':
+            videoWidth = 428
+            videoHeight = 240
+            break;
+        default:
+            break;
+    }
+
+    let parser = new Parser()
+    let response = await got(url)
+    let streamUrl = response.body
+    parser.push(streamUrl)
+    parser.end()
+    let mainPlaylist = parser.manifest
+
+    let link = mainPlaylist.playlists.find((playlist: any) => {
+        return playlist.attributes.RESOLUTION.height === videoHeight &&
+            playlist.attributes.RESOLUTION.width === videoWidth
+    })
+    console.log(link.uri)
+
+}
+
+function getEpisode(url: string) {
+    let episode: Episode = {
+        url: url,
+        info: async () => {
+            return await getEpisodeInfo(episode.url)
+        },
+        download: async (path, resolution, progressCallback) => {
+            await downloadEpisode(episode.url, path, resolution, progressCallback)
+        }
+    }
+
+    return episode
+}
+
+async function getSeasons(url: string) {
     const langRegex = /(?<=\.com)(.*)(?=\/)/
-    const gUrl = 'https://www.crunchyroll.com'
-    const anime = url.replace(langRegex, '')
+    url = url.replace(langRegex, '')
 
     let cookieJar = await setLanguageCookie('enUS')
-    let seasons: any = {}
 
-    const $ = await requestPromise.get({
-        uri: anime,
-        jar: cookieJar,
-        transform: (body) => {
-            return cheerio.load(body);
+    const response = await got(url, { cookieJar })
+    const $ = cheerio.load(response.body)
+
+    let seasons: Season[] = []
+
+    $('#showview_content_videos > ul > li').each((i: number, el: CheerioElement) => {
+        let title = $(el).children('a').attr('title')!
+
+        let episodes: Episode[] = []
+
+        $(`#showview_content_videos > ul > li:has(a[title="${title}"]) > ul a`).each((i: number, el: CheerioElement) => {
+            let link = 'https://www.crunchyroll.com' + $(el).attr('href')
+
+            let episode = getEpisode(link)
+
+            episodes.push(episode)
+        })
+        seasons[i] = {
+            title: title,
+            episodes: episodes
         }
     });
 
-    $('#showview_content_videos > ul > li').each((i: number, el: CheerioElement) => {
-        let title: string = $(el).children('a').attr('title')
-
-        let links: string[] = []
-
-        $(`#showview_content_videos > ul > li:has(a[title="${title}"]) > ul a`).each((i: number, el: CheerioElement) => {
-            links.push(gUrl + $(el).attr('href'))
-        })
-
-        seasons[title] = links.reverse()
-    });
     return seasons
 }
 
-async function getConfig(url: string) {
-    let configRegex = /(?<=vilos.config.media\s=\s)(.*)(?=;)/
 
-    let data = await requestPromise.get(url)
-    let config = data.match(configRegex)
-    let parsedConfig = JSON.parse(config[0])
-    parsedConfig.metadata.episode_uri = url
-    return parsedConfig
-}
+
+
+
 
 async function downloadFromConfig(config: any, options: { resolution: string, hardsub: any, path?: string }, progressCallback?: (progress: any) => void) {
 
     if (options.hardsub === 'none') {
         options.hardsub = null
     }
-    const { resolution, hardsub, path} = options
+    const { resolution, hardsub, path } = options
     let videoWidth: number
     let videoHeight: number
     let streamType = 'multitrack_adaptive_hls_v2'
@@ -116,7 +174,8 @@ async function downloadFromConfig(config: any, options: { resolution: string, ha
     })
 
     let parser = new Parser()
-    let streamUrl = await requestPromise.get(stream.url)
+    let response = await got(stream.url)
+    let streamUrl = response.body
     parser.push(streamUrl)
     parser.end()
     let mainPlaylist = parser.manifest
@@ -144,9 +203,4 @@ async function downloadFromConfig(config: any, options: { resolution: string, ha
     command.run()
 }
 
-async function getInfo(url: string){
-    
-}
-
-export default { getInfo }
-
+export default { getSeasons, getEpisode , isCompatible}

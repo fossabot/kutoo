@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals');
-const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const libraryConfig = {
@@ -25,12 +24,6 @@ const libraryConfig = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-
-        new TypedocWebpackPlugin({
-            out: path.resolve(__dirname, 'docs'),
-            tsconfig: './tsconfig.json',
-            theme: 'minimal'
-        }, './src'),
     ],
     externals: [nodeExternals()],
 };

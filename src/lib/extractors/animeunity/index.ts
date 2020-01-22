@@ -1,82 +1,96 @@
 import cheerio from 'cheerio';
 import fs from 'fs';
-import mkdirp from 'mkdirp';
-import requestPromise from 'request-promise-native'
-import request from 'request'
+import { resolve } from 'path'
+import got from 'got'
 
-/**
- * Takes an id and return the correlated episodes links
- * @param id - A valid id from animeunity
- * @returns A promise with the episodes links
- */
+import { getDirectLink } from './helper'
 
-async function getDirectLinks(url: string) {
-    const $ = await requestPromise.get({
-        uri: url,
-        transform: (body) => {
-            return cheerio.load(body);
-        }
-    });
 
-    let src = $('#video-player > source').attr('src');
-    return src
+function isCompatible(url: string) {
+    let urlRegex = /^(http(s)?(:\/\/))?(www\.)?animeunity\.it(\/.*)?$/
+    return urlRegex.test(url)
+
 }
 
-async function getInfo(url: string) {
-    let info: any = {};
+async function getEpisodeInfo(url: string) {
+    let info: EpisodeInfo = {
+        url: url,
+        directUrl: await getDirectLink(url),
+        captions: {}
+    }
+
+    return info
+}
+
+async function downloadEpisode(url: string, path: string, resolution: resolution, progressCallback: (progress: any) => void) {
+    const fileName = url.substring(url.lastIndexOf('/') + 1)
+
+    path = resolve(path)
+
+    await fs.promises.mkdir(path, { recursive: true })
+
+    await got.stream(url)
+        .on('downloadProgress', progress => {
+            progressCallback(progress)
+        })
+        .pipe(fs.createWriteStream(path + '\\' + fileName))
+}
+
+function getEpisode(url: string) {
+    let episode: Episode = {
+        url: url,
+        info: async () => {
+            return await getEpisodeInfo(episode.url)
+        },
+        download: async (path, resolution, progressCallback) => {
+            await downloadEpisode(episode.url, path, resolution, progressCallback)
+        }
+    }
+
+    return episode
+}
+
+async function getSeasons(url: string) {
     let titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > ' +
         'div.col-lg-4.col-sm-12.custom-padding-bottom > div > div.card-body.bg-light-gray > p:nth-child(2)'
 
-    const $ = await requestPromise.get({
-        uri: url,
-        transform: (body) => {
-            return cheerio.load(body);
-        }
-    });
+    const response = await got(url)
+    const $ = cheerio.load(response.body)
 
     let title = $(titleSelector).html()!.replace('<b>TITOLO: </b>', '').replace(/\s\s+/g, ' ').replace(/\s/, '')
-
-    info = {
-        name: title,
-        description: '',
-        seasons: {
-            s1: {
-                name: title,
-                episodes: {
-
-                }
-            }
-        },
-    }
+    let links: string[] = []
+    let episodes: Episode[] = []
+    let seasons: Season[] = []
 
     $('.ep-box > a').each((i: number, el: CheerioElement) => {
-        info.seasons['s1'].push(`https://www.animeunity.it/${$(el).attr('href')}`);
+        links.push(`https://www.animeunity.it/${$(el).attr('href')}`);
     });
 
-    return info;
+    for (let i = 0; i < links.length; i++) {
+        let episode = getEpisode(links[i])
+        episodes.push(episode)
+    }
+
+    seasons[0] = {
+        episodes: episodes,
+        title: title
+    }
+
+    return seasons;
 }
 
 
+// async function updateLibrary() {
+//     let response = await got(url)
+// const $ = cheerio.load(response.body)
 
+//     let links: any = {}
+//     $('.archive-card').each((i: number, card: any) => {
+//         let link = $(card).find('a').attr('href')
+//         let title = $(card).find('.card-title > b').text()
+//         links[title] = `https://www.animeunity.it/${link}`
+//     });
+//     return links
+// }
 
-
-
-
-async function updateLibrary() {
-    const $ = await requestPromise.get({
-        uri: 'https://animeunity.it/anime.php?c=archive&page=*',
-        transform: (body) => {
-            return cheerio.load(body);
-        }
-    });
-
-    let links: any = {}
-    $('.archive-card').each((i: number, card: any) => {
-        let link = $(card).find('a').attr('href')
-        let title = $(card).find('.card-title > b').text()
-        links[title] = `https://www.animeunity.it/${link}`
-    });
-    return links
-}
-
-export default { getInfo, updateLibrary }
+export default { getSeasons, getEpisode, isCompatible }
