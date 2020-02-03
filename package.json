@@ -28,7 +28,7 @@
   },
   "scripts": {
     "clean": "del-cli dist",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "start:cli": "node -r ts-node/register src/cli/index.ts",
     "start:example": "ts-node --files examples/index.ts",
     "build": "yarn clean && tsc --project .",
