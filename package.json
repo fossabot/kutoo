@@ -1,6 +1,6 @@
 {
   "name": "animekit",
-  "version": "0.0.2",
+  "version": "0.0.2-b",
   "license": "MIT",
   "main": "./dist/lib/index",
   "types": "./dist/lib/index",
