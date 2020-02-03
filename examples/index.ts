@@ -1,27 +1,14 @@
-import animekit from '../src/lib/'
+import * as animekit from '../src/lib/animekit'
 import fs from 'fs'
 
 (async () => {
-    // let url = 'https://crunchyroll.com/rwby'
-    // let episodes = await animekit.crunchyroll.getEpisodes(url)
-    // console.log(episodes)
 
-    // let id = 571
-    // let links = await animekit.animeunity.getLinks(id)
-    // console.log(links)
-    // await animekit.animeunity.downloadFromLink(links[0], './temp/eps', (percent, name)=>{})
-    
-    // let url = 'https://nyaatorrent.com/anime/endro'
-    // let episodes = await animekit.nyaatorrent.getLinks(url)
-    // console.log(episodes)
+    // let url = 'https://www.animeunity.it/anime.php?id=571'
+    // let url = 'https://www.crunchyroll.com/rwby/episode-10-out-in-the-open-792165'
+    let url = 'https://www.crunchyroll.com/darling-in-the-franxx/episode-24-never-let-me-go-769621'
 
-    // let library = await animekit.animeunity.updateLibrary()
-    // console.log(library)
-    // fs.writeFileSync('./library.json', JSON.stringify(library))
 
-    let info = await animekit.crunchyroll.getInfo('https://www.animeunity.it/anime.php?id=571')
+    let episode = animekit.getEpisode(url)
+    let info = await episode!.info()
     console.log(info)
-
-    // let links = await animekit.gogoanime.getLinks('https://gogoanime.video/category/enen-no-shouboutai')
-    // console.log(links)
 })()
