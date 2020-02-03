@@ -1,12 +1,13 @@
 {
   "name": "animekit",
-  "version": "0.0.1-test-3",
+  "version": "0.0.2",
   "license": "MIT",
-  "main": "./lib/animekit.js",
-  "types": "./lib/index.d.ts",
-  "bin": "./cli/cli.js",
+  "main": "./dist/lib/index",
+  "types": "./dist/lib/index",
+  "bin": "./dist/lib/cli",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
+    "del-cli": "^3.0.0",
     "fluent-ffmpeg": "^2.1.2",
     "got": "^10.2.2",
     "m3u8-parser": "^4.4.0",
@@ -18,34 +19,26 @@
   "devDependencies": {
     "@types/cheerio": "^0.22.15",
     "@types/fluent-ffmpeg": "^2.1.12",
-    "@types/mkdirp": "^0.5.2",
     "@types/node": "^13.1.2",
+    "@types/request": "^2.48.4",
     "@types/request-promise-native": "^1.0.17",
-    "clean-webpack-plugin": "^3.0.0",
-    "fork-ts-checker-webpack-plugin": "^4.0.0-beta.4",
     "jest": "^25.1.0",
-    "pnp-webpack-plugin": "^1.5.0",
-    "ts-loader": "^6.2.1",
     "ts-node": "^8.5.4",
-    "typedoc-webpack-plugin": "^1.1.4",
-    "typescript": "^3.7.4",
-    "webpack": "^4.41.4",
-    "webpack-cli": "^3.3.10",
-    "webpack-node-externals": "^1.7.2"
+    "typescript": "^3.7.4"
   },
   "scripts": {
+    "clean": "del-cli dist",
     "test": "jest",
     "start:cli": "node -r ts-node/register src/cli/index.ts",
     "start:example": "ts-node --files examples/index.ts",
-    "build": "webpack --mode production",
+    "build": "yarn clean && tsc --project .",
     "prepare": "yarn build",
     "version": "git add -A .",
     "postversion": "git push && git push --tags"
   },
-  "repository": "https://github.com/FedericoMorrone/animekit.git",
-  "author": "Federico Morrone <flickmor@gmail.com>",
   "files": [
-    "lib/**/*",
-    "cli/**/*"
-  ]
+    "dist/"
+  ],
+  "repository": "https://github.com/FedericoMorrone/animekit.git",
+  "author": "Federico Morrone <flickmor@gmail.com>"
 }

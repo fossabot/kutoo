@@ -6,6 +6,8 @@ import { Parser } from 'm3u8-parser'
 import { setLanguageCookie, getConfig } from './helper'
 import { Config } from './config'
 
+import * as d from '../../../declarations'
+
 function isCompatible(url: string) {
     let urlRegex = /^(http(s)?(:\/\/))?(www\.)?crunchyroll\.com(\/.*)?$/
     return urlRegex.test(url)
@@ -14,7 +16,7 @@ function isCompatible(url: string) {
 
 
 async function getEpisodeInfo(url: string) {
-    let info: EpisodeInfo = {
+    let info: d.EpisodeInfo = {
         url: url,
         directUrl: '',
         captions: {}
@@ -35,7 +37,7 @@ async function getEpisodeInfo(url: string) {
 }
 
 
-async function downloadEpisode(url: string, path: string, resolution: resolution, progressCallback: (progress: any) => void) {
+async function downloadEpisode(url: string, path: string, resolution: d.resolution, progressCallback: (progress: any) => void) {
     let videoWidth: number
     let videoHeight: number
 
@@ -80,7 +82,7 @@ async function downloadEpisode(url: string, path: string, resolution: resolution
 }
 
 function getEpisode(url: string) {
-    let episode: Episode = {
+    let episode: d.Episode = {
         url: url,
         info: async () => {
             return await getEpisodeInfo(episode.url)
@@ -102,12 +104,12 @@ async function getSeasons(url: string) {
     const response = await got(url, { cookieJar })
     const $ = cheerio.load(response.body)
 
-    let seasons: Season[] = []
+    let seasons: d.Season[] = []
 
     $('#showview_content_videos > ul > li').each((i: number, el: CheerioElement) => {
         let title = $(el).children('a').attr('title')!
 
-        let episodes: Episode[] = []
+        let episodes: d.Episode[] = []
 
         $(`#showview_content_videos > ul > li:has(a[title="${title}"]) > ul a`).each((i: number, el: CheerioElement) => {
             let link = 'https://www.crunchyroll.com' + $(el).attr('href')
@@ -203,4 +205,4 @@ async function downloadFromConfig(config: any, options: { resolution: string, ha
     command.run()
 }
 
-export default { getSeasons, getEpisode , isCompatible}
+export default { getSeasons, getEpisode, isCompatible }

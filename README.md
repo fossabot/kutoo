@@ -70,7 +70,7 @@ This will return the following object
 }
 ```
 
-## Supported sites
+## Supported anime sites
 * [Animeflix](https://animeflix.in/)
 * [Animeunity](https://animeunity.it/)
 * [Crunchyroll](https://www.crunchyroll.com/)

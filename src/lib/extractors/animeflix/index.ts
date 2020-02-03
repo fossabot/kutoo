@@ -2,6 +2,8 @@ import got from 'got'
 import cheerio from 'cheerio'
 import { getDirectLink } from './helper'
 
+import * as d from '../../../declarations'
+
 function isCompatible(url: string) {
     let urlRegex = /^(http(s)?(:\/\/))?(www\.)?(watch\.)?animeflix\.in(\/.*)?$/
     return urlRegex.test(url)
@@ -9,7 +11,7 @@ function isCompatible(url: string) {
 }
 
 async function getEpisodeInfo(url: string) {
-    let info: EpisodeInfo = {
+    let info: d.EpisodeInfo = {
         url: url,
         directUrl: await getDirectLink(url),
         captions: {}
@@ -18,12 +20,12 @@ async function getEpisodeInfo(url: string) {
     return info
 }
 
-async function downloadEpisode(url: string, path: string, resolution: resolution, progressCallback: (progress: any) => void) {
+async function downloadEpisode(url: string, path: string, resolution: d.resolution, progressCallback: (progress: any) => void) {
 
 }
 
 function getEpisode(url: string) {
-    let episode: Episode = {
+    let episode: d.Episode = {
         url: url,
         info: async () => {
             return await getEpisodeInfo(episode.url)

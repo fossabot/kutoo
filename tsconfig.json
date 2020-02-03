@@ -1,27 +1,36 @@
 {
     "compilerOptions": {
+        "baseUrl": "src",
         "module": "commonjs",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "target": "es6",
         "sourceMap": true,
         "noImplicitAny": true,
-        "moduleResolution": "node",
-        "outDir": "",
-        "baseUrl": ".",
+        "outDir": "./dist",
+        "rootDir": "src/",
         "declaration": true,
+        "removeComments": true,
         "strict": true,
+        // "paths": {
+        //     "@utils": [
+        //         "utils/index.ts"
+        //     ],
+        //     "@declarations": [
+        //         "declarations/index.ts"
+        //     ]
+        // },
+        // "types": ["./lib/extractors/index.d.ts"],
         "typeRoots": [
             "node_modules/@types",
-            "src/type",
-            "src/lib/types"
+            "types"
         ]
     },
-    "files": [
-        "src/lib/types/index.d.ts"
-    ],
     "include": [
-        "src/**/*"
-        // "examples/**/*"
+        "src/lib/*.ts",
+        "src/declarations/*.ts"
     ],
+    "exclude": [
+        "node_modules"
+    ]
 }

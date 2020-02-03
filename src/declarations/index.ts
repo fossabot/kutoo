@@ -1,8 +1,16 @@
-type resolution = 'uhd' | 'fhd' | 'hd' | 'sd' | 'low' | 'ulow'
+export interface compatibilityFunc {
+    (url: string): boolean
+}
+
+export interface episodeInfoFunc {
+    (url: string): Promise<any>
+}
+
+export type resolution = 'uhd' | 'fhd' | 'hd' | 'sd' | 'low' | 'ulow'
 
 
 
-interface EpisodeInfo {
+export interface EpisodeInfo {
     url: string
     directUrl: string
     captions: {
@@ -10,13 +18,14 @@ interface EpisodeInfo {
     }
 }
 
-interface Episode {
+export interface Episode {
     url: string
     info(): Promise<EpisodeInfo>
     download(path: string, resolution: resolution, progressCallback: (progress: any) => void): Promise<void>
 }
 
-interface Season {
+export interface Season {
     title: string
     episodes: Episode[]
 }
+

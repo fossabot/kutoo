@@ -5,15 +5,18 @@ import got from 'got'
 
 import { getDirectLink } from './helper'
 
+import * as d from '../../../declarations'
 
-function isCompatible(url: string) {
+// import { compatibilityFunc, episodeInfoFunc, resolution, Episode, EpisodeInfo, Season } from '../extractors'
+
+
+let isCompatible: d.compatibilityFunc = function (url: string) {
     let urlRegex = /^(http(s)?(:\/\/))?(www\.)?animeunity\.it(\/.*)?$/
     return urlRegex.test(url)
-
 }
 
-async function getEpisodeInfo(url: string) {
-    let info: EpisodeInfo = {
+let getEpisodeInfo: d.episodeInfoFunc = async function (url: string) {
+    let info: d.EpisodeInfo = {
         url: url,
         directUrl: await getDirectLink(url),
         captions: {}
@@ -22,7 +25,7 @@ async function getEpisodeInfo(url: string) {
     return info
 }
 
-async function downloadEpisode(url: string, path: string, resolution: resolution, progressCallback: (progress: any) => void) {
+async function downloadEpisode(url: string, path: string, resolution: d.resolution, progressCallback: (progress: any) => void) {
     const fileName = url.substring(url.lastIndexOf('/') + 1)
 
     path = resolve(path)
@@ -37,7 +40,7 @@ async function downloadEpisode(url: string, path: string, resolution: resolution
 }
 
 function getEpisode(url: string) {
-    let episode: Episode = {
+    let episode: d.Episode = {
         url: url,
         info: async () => {
             return await getEpisodeInfo(episode.url)
@@ -59,8 +62,8 @@ async function getSeasons(url: string) {
 
     let title = $(titleSelector).html()!.replace('<b>TITOLO: </b>', '').replace(/\s\s+/g, ' ').replace(/\s/, '')
     let links: string[] = []
-    let episodes: Episode[] = []
-    let seasons: Season[] = []
+    let episodes: d.Episode[] = []
+    let seasons: d.Season[] = []
 
     $('.ep-box > a').each((i: number, el: CheerioElement) => {
         links.push(`https://www.animeunity.it/${$(el).attr('href')}`);
