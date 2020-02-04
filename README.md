@@ -16,14 +16,22 @@ A desktop gui written in electron is avaible [`here`](https://github.com/Federic
 Install Animekit using [`yarn`](https://classic.yarnpkg.com/):
 
 ```bash
-yarn add animekit
+yarn add global animekit
 ```
 
 Or [`npm`](https://www.npmjs.com/):
 
 ```bash
-npm install animekit
+npm install animekit -g
 ```
+
+Then you can just do
+
+```bash
+animekit <url> -o <path>
+```
+
+## Pragmatic usage
 
 To download an episode you first need to create an episode object
 
