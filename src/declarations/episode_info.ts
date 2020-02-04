@@ -22,7 +22,3 @@ export interface Season {
   title: string
   episodes: Episode[]
 }
-
-export interface episodeInfoFunc {
-  (url: string): Promise<EpisodeInfo>
-}

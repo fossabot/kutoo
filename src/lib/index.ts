@@ -1,4 +1,5 @@
 import extractors from './extractors'
+import * as d from 'declarations'
 
 function getEpisode(url: string) {
     for (const extor of extractors) {
@@ -6,6 +7,7 @@ function getEpisode(url: string) {
             return extor.getEpisode(url)
         }
     }
+    return null
 }
 
 async function getSeasons(url: string) {
@@ -14,6 +16,7 @@ async function getSeasons(url: string) {
             return extor.getSeasons(url)
         }
     }
+    return null
 }
 
-export { getEpisode, getSeasons }
+export default { getEpisode, getSeasons }

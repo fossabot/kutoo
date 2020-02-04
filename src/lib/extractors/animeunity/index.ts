@@ -7,15 +7,12 @@ import { getDirectLink } from './helper'
 
 import * as d from '../../../declarations'
 
-// import { compatibilityFunc, episodeInfoFunc, resolution, Episode, EpisodeInfo, Season } from '../extractors'
-
-
-let isCompatible: d.compatibilityFunc = function (url: string) {
+function isCompatible(url: string) {
     let urlRegex = /^(http(s)?(:\/\/))?(www\.)?animeunity\.it(\/.*)?$/
     return urlRegex.test(url)
 }
 
-let getEpisodeInfo: d.episodeInfoFunc = async function (url: string) {
+async function getEpisodeInfo(url: string) {
     let info: d.EpisodeInfo = {
         url: url,
         directUrl: await getDirectLink(url),
@@ -46,7 +43,8 @@ function getEpisode(url: string) {
             return await getEpisodeInfo(episode.url)
         },
         download: async (path, resolution, progressCallback) => {
-            await downloadEpisode(episode.url, path, resolution, progressCallback)
+            let info = await episode.info()
+            await downloadEpisode(info.directUrl, path, resolution, progressCallback)
         }
     }
 

@@ -1,10 +1,10 @@
 {
   "name": "animekit",
-  "version": "0.0.2-b",
+  "version": "0.0.3",
   "license": "MIT",
   "main": "./dist/lib/index",
   "types": "./dist/lib/index",
-  "bin": "./bin/animekit.js",
+  "bin": "./dist/lib/cli.js",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "del-cli": "^3.0.0",
@@ -26,15 +26,17 @@
   "scripts": {
     "clean": "del-cli dist",
     "test": "jest --passWithNoTests",
-    "start:cli": "node bin/animekit.js",
-    "start:example": "ts-node --files examples/index.ts",
+    "start:cli": "yarn ts-node src/lib/cli.ts",
+    "start:example": "yarn ts-node --files examples/index.ts",
     "build": "yarn clean && tsc --project .",
     "prepare": "yarn build",
     "version": "git add -A .",
     "postversion": "git push && git push --tags"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "LICENSE",
+    "!dist/test"
   ],
   "repository": "https://github.com/FedericoMorrone/animekit.git",
   "author": "Federico Morrone <flickmor@gmail.com>"

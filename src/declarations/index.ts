@@ -1,11 +1,3 @@
-export interface compatibilityFunc {
-    (url: string): boolean
-}
-
-export interface episodeInfoFunc {
-    (url: string): Promise<any>
-}
-
 export type resolution = 'uhd' | 'fhd' | 'hd' | 'sd' | 'low' | 'ulow'
 
 
