@@ -4,15 +4,13 @@
   "license": "MIT",
   "main": "./dist/lib/index",
   "types": "./dist/lib/index",
-  "bin": "./dist/lib/cli",
+  "bin": "./bin/animekit.js",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "del-cli": "^3.0.0",
     "fluent-ffmpeg": "^2.1.2",
     "got": "^10.2.2",
     "m3u8-parser": "^4.4.0",
-    "request": "^2.88.0",
-    "request-promise-native": "^1.0.8",
     "tough-cookie": "^3.0.1",
     "yargs": "^15.1.0"
   },
@@ -20,8 +18,7 @@
     "@types/cheerio": "^0.22.15",
     "@types/fluent-ffmpeg": "^2.1.12",
     "@types/node": "^13.1.2",
-    "@types/request": "^2.48.4",
-    "@types/request-promise-native": "^1.0.17",
+    "@types/tough-cookie": "^2.3.6",
     "jest": "^25.1.0",
     "ts-node": "^8.5.4",
     "typescript": "^3.7.4"

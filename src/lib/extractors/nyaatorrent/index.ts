@@ -1,16 +1,13 @@
-import requestPromise from 'request-promise-native'
+import got from 'got'
 import cheerio from 'cheerio'
 
 async function getLinks(url: string) {
     let links: string[] = [];
-    const $ = await requestPromise.get({
-        uri: url,
-        transform: (body: any) => {
-            return cheerio.load(body);
-        }
-    });
+    const response = await got(url)
+    const $ = cheerio.load(response.body)
+
     $('#tv-seasons > div > div.les-content > a').each((i: number, el: any) => {
-        links.push($(el).attr('href'));
+        links.push($(el).attr('href')!);
     });
     return links;
 }
@@ -19,12 +16,8 @@ async function getLinks(url: string) {
 async function getMagnets(url: string) {
     let magnets: any = {}
 
-    const $ = await requestPromise.get({
-        uri: url,
-        transform: (body: any) => {
-            return cheerio.load(body);
-        }
-    });
+    const response = await got(url)
+    const $ = cheerio.load(response.body)
 
     $('tbody > tr > .relative > span').each((i: number, res: any) => {
         $('tbody > tr > .text-center > a').each((i: number, el: any) => {

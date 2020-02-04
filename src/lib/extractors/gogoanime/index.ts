@@ -1,24 +1,18 @@
-import requestPromise from 'request-promise-native'
+import got from 'got'
 import cheerio from 'cheerio'
 
 async function getDownloadPage(url: string) {
-    const $ = await requestPromise.get({
-        uri: url,
-        transform: (body) => {
-            return cheerio.load(body);
-        }
-    });
+    const response = await got(url)
+    const $ = cheerio.load(response.body)
+
     let src = 'https:' + $('iframe').attr('src')
     console.log(src.replace('streaming.php', 'download'))
 }
 
 async function getFullUrl(url: string) {
-    const $ = await requestPromise.get({
-        uri: url,
-        transform: (body) => {
-            return cheerio.load(body);
-        }
-    });
+    const response = await got(url)
+    const $ = cheerio.load(response.body)
+
     var ep_start = $('#episode_page a.active').attr('ep_start');
     var ep_end = $('#episode_page a.active').attr('ep_end');
     var id = $("input#movie_id").val();
@@ -33,21 +27,17 @@ async function getLinks(url: string) {
     let fullUrl = await getFullUrl(url)
 
     let links: string[] = [];
-    const $ = await requestPromise.get({
-        uri: fullUrl,
-        transform: (body) => {
-            return cheerio.load(body);
-        }
-    });
+    const response = await got(fullUrl)
+    const $ = cheerio.load(response.body)
 
     $('#episode_related > li > a').each((i: number, el: any) => {
-        links.push(`https://gogoanime.video${$(el).attr('href').replace(/\s/, '')}`);
+        links.push(`https://gogoanime.video${$(el).attr('href')!.replace(/\s/, '')}`);
     });
 
     return links.reverse()
 }
 
-async function getDownloadLinks(url: string){
+async function getDownloadLinks(url: string) {
 
 }
-export default { getLinks , getDownloadLinks, }
+export default { getLinks, getDownloadLinks, }
