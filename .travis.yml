@@ -15,9 +15,6 @@ jobs:
 
     allow_failures:
         - os: windows
-script:
-    - yarn test
-    - yarn coveralls
 #  deploy:
 #     provider: npm
 #     email: "flickmor@gmail.com"
