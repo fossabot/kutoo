@@ -6,7 +6,7 @@ import path from 'path'
 import * as d from '../declarations'
 
 var argv = yargs
-    .usage('$0 <url> [option]')
+    .usage('animekit <url> [option]')
     .option('p', {
         alias: 'playlist',
         description: 'Download playlist instead of single episode',

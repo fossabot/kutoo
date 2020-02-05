@@ -4,7 +4,7 @@
         "module": "commonjs",
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
-        "target": "es6",
+        "target": "es2017",
         "sourceMap": true,
         "noImplicitAny": true,
         "outDir": "./dist",
@@ -12,6 +12,9 @@
         "declaration": true,
         "removeComments": true,
         "strict": true,
+        "lib": [
+            "esnext"
+        ],
         // "paths": {
         //     "@utils": [
         //         "utils/index.ts"
