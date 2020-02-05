@@ -9,7 +9,7 @@ os:
 
 jobs:
     allow_failures:
-        - os: osx
+        - os: windows
 #  deploy:
 #     provider: npm
 #     email: "flickmor@gmail.com"
