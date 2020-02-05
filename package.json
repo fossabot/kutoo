@@ -1,6 +1,6 @@
 {
   "name": "animekit",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "main": "./dist/lib/index",
   "types": "./dist/lib/index",
@@ -35,8 +35,7 @@
   },
   "files": [
     "dist/",
-    "LICENSE",
-    "!dist/test"
+    "LICENSE"
   ],
   "repository": "https://github.com/FedericoMorrone/animekit.git",
   "author": "Federico Morrone <flickmor@gmail.com>"
