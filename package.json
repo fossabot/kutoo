@@ -17,15 +17,17 @@
   "devDependencies": {
     "@types/cheerio": "^0.22.15",
     "@types/fluent-ffmpeg": "^2.1.12",
+    "@types/jest": "^25.1.1",
     "@types/node": "^13.1.2",
     "@types/tough-cookie": "^2.3.6",
     "jest": "^25.1.0",
+    "ts-jest": "^25.2.0",
     "ts-node": "^8.5.4",
     "typescript": "^3.7.4"
   },
   "scripts": {
     "clean": "del-cli dist",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "start:cli": "yarn ts-node src/lib/cli.ts",
     "start:example": "yarn ts-node --files examples/index.ts",
     "build": "yarn clean && tsc --project .",

@@ -2,7 +2,7 @@ import cheerio from 'cheerio'
 import got from 'got'
 import { CookieJar } from 'tough-cookie'
 
-import * as utils from '../../../utils'
+import * as utils from '../../utils'
 
 
 
