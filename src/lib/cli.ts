@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import yargs from 'yargs'
-import { isUrl } from '../../src/utils'
+import { isUrl } from '../utils'
 import animekit from '../lib'
 import path from 'path'
 import * as d from '../declarations'
