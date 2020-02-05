@@ -1,6 +1,1 @@
-src
-temp
-types
-.vscode
-.github
-examples
+dist/test
