@@ -29,7 +29,8 @@ var argv = yargs
     .help()
     .alias('h', 'help')
     .version()
-    .alias('v', 'version').argv
+    .alias('v', 'version')
+    .detectLocale(false).argv
 
 var url = argv._[0]
 
