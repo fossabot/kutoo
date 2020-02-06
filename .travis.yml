@@ -1,6 +1,7 @@
 language: node_js
 node_js:
     - "node"
+    - "lts"
 
 os:
     - linux
@@ -8,11 +9,6 @@ os:
     - windows
 
 jobs:
-    include:
-        - stage: Produce Coverage
-          node_js: node
-          script: jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
-
     allow_failures:
         - os: windows
 #  deploy:

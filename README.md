@@ -4,7 +4,6 @@
 [![Build Status](https://travis-ci.com/FedericoMorrone/animekit.svg?branch=development)](https://travis-ci.com/FedericoMorrone/animekit)
 [![npm version](https://badge.fury.io/js/animekit.svg)](https://badge.fury.io/js/animekit)
 [![Downloads](https://img.shields.io/npm/dm/animekit.svg)](https://npmjs.com/animekit)
-[![Coverage Status](https://coveralls.io/repos/github/FedericoMorrone/animekit/badge.svg?branch=master)](https://coveralls.io/github/FedericoMorrone/animekit?branch=master)
 [![GitHub license](https://img.shields.io/github/license/FedericoMorrone/animekit)](https://github.com/FedericoMorrone/animekit/blob/master/LICENSE)
 
 Animekit is an easy to use library to download anime and manga from various websites.
