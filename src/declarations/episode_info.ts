@@ -14,7 +14,7 @@ export interface Episode {
   download(
     path: string,
     resolution: resolution,
-    progressCallback: (progress: any) => void
+    progressCallback?: (progress: any) => void
   ): Promise<void>
 }
 

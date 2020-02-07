@@ -31,10 +31,12 @@
     },
     "include": [
         "src/lib/*.ts",
-        "src/declarations/*.ts"
+        "src/declarations/*.ts",
+        "src/examples/*.ts"
     ],
     "exclude": [
         "node_modules",
-        "src/test"
+        "src/test",
+        "src/examples",
     ]
 }

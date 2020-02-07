@@ -22,7 +22,7 @@ async function getEpisodeInfo(url: string) {
     return info
 }
 
-async function downloadEpisode(url: string, path: string, resolution: d.resolution, progressCallback: (progress: any) => void) {
+async function downloadEpisode(url: string, path: string, resolution: d.resolution, progressCallback?: (progress: any) => void) {
     const fileName = url.substring(url.lastIndexOf('/') + 1)
 
     path = resolve(path)
@@ -31,7 +31,9 @@ async function downloadEpisode(url: string, path: string, resolution: d.resoluti
 
     await got.stream(url)
         .on('downloadProgress', progress => {
-            progressCallback(progress)
+            if (progressCallback) {
+                progressCallback(progress)
+            }
         })
         .pipe(fs.createWriteStream(path + '\\' + fileName))
 }

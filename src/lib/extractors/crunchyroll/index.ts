@@ -4,6 +4,7 @@ import got from 'got'
 import { Parser } from 'm3u8-parser'
 
 import { setLanguageCookie, getConfig } from './helper'
+import { downloadManifest } from '../../utils'
 import { Config } from './config'
 
 import * as d from '../../../declarations'
@@ -37,7 +38,7 @@ async function getEpisodeInfo(url: string) {
 }
 
 
-async function downloadEpisode(url: string, path: string, resolution: d.resolution, progressCallback: (progress: any) => void) {
+async function downloadEpisode(url: string, path: string, resolution: d.resolution, progressCallback?: (progress: any) => void) {
     let videoWidth: number
     let videoHeight: number
 
@@ -77,7 +78,8 @@ async function downloadEpisode(url: string, path: string, resolution: d.resoluti
         return playlist.attributes.RESOLUTION.height === videoHeight &&
             playlist.attributes.RESOLUTION.width === videoWidth
     })
-    console.log(link.uri)
+    // console.log(link.uri)
+    downloadManifest(link.uri, path+ '/video.mp4', false)
 
 }
 
@@ -88,7 +90,8 @@ function getEpisode(url: string) {
             return await getEpisodeInfo(episode.url)
         },
         download: async (path, resolution, progressCallback) => {
-            await downloadEpisode(episode.url, path, resolution, progressCallback)
+            const info = await episode.info()
+            await downloadEpisode(info.directUrl, path, resolution, progressCallback)
         }
     }
 

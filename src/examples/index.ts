@@ -1,4 +1,4 @@
-import * as animekit from '../src/lib/animekit'
+import animekit from '../lib'
 import fs from 'fs'
 
 (async () => {
@@ -8,7 +8,6 @@ import fs from 'fs'
     let url = 'https://www.crunchyroll.com/darling-in-the-franxx/episode-24-never-let-me-go-769621'
 
 
-    let episode = animekit.getEpisode(url)
-    let info = await episode!.info()
-    console.log(info)
+    let episode = await animekit.getEpisode(url)
+    await episode!.download('./temp', 'fhd')
 })()
