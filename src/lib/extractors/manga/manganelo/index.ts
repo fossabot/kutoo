@@ -1,21 +1,9 @@
 import got from 'got'
 import cheerio from 'cheerio'
-import fs, { link } from 'fs'
+import fs from 'fs'
 
-function replaceInvaldChars(str: string, v?: string) {
-    if (!v) {
-        v = ''
-    }
-    return str.replace(/[\~\#\%\&\*\{\}\\\:\<\>\?\/\+\|]/g, v);
-}
+import { replaceInvalidChars, nthIndex } from '../../../utils'
 
-function nthIndex(str: string, pat: string, n: number) {
-    var L = str.length, i = -1;
-    while (n-- && i++ < L) {
-        i = str.indexOf(pat, i);
-    }
-    return i;
-}
 
 async function getLinks(url: string) {
     let links: string[] = []
@@ -56,7 +44,7 @@ async function downlodPages(url: string, chapter: string, name: string) {
     let links = await getPages(url)
     for (const lnk of links) {
         let fileName = lnk.substring(nthIndex(lnk, '/', 7) + 1)
-        let path = replaceInvaldChars(name) + '/' + replaceInvaldChars(chapter)
+        let path = replaceInvalidChars(name) + '/' + replaceInvalidChars(chapter)
         console.log(fileName, path)
         await fs.promises.mkdir('./temp/' + path, { recursive: true })
 
@@ -67,13 +55,18 @@ async function downlodPages(url: string, chapter: string, name: string) {
 
 (async () => {
     let url = 'https://manganelo.com/manga/jgfw265851564797003'
+    // let url = 'https://manganelo.com/manga/kono_subarashii_sekai_ni_shukufuku_o'
+    // let url = 'https://manganelo.com/manga/yovbxa13526492'
+    // let url = 'https://manganelo.com/manga/kimetsu_no_yaiba'
+    // let url = 'https://manganelo.com/manga/read_one_piece_manga_online_free4'
+
     let links = await getLinks(url)
-    console.time('start download')
+    console.time('download')
 
     for (let i = 0; i < links.links.length; i++) {
         console.log(links.links[i], links.names[i], links.title)
         await downlodPages(links.links[i], links.names[i], links.title)
     }
 
-    console.timeEnd('start download')
+    console.timeEnd('download')
 })()

@@ -22,3 +22,18 @@ export function isUrl(s: string, protocols = ['http', 'https']) {
         return false;
     }
 };
+
+export function replaceInvalidChars(str: string, v?: string) {
+    if (!v) {
+        v = ''
+    }
+    return str.replace(/[\~\#\%\&\*\{\}\\\:\<\>\?\/\+\|]/g, v);
+}
+
+export function nthIndex(str: string, pat: string, n: number) {
+    var L = str.length, i = -1;
+    while (n-- && i++ < L) {
+        i = str.indexOf(pat, i);
+    }
+    return i;
+}
