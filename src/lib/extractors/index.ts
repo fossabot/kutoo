@@ -1,13 +1,9 @@
-import crunchyroll from './crunchyroll'
-import animeunity from './animeunity'
-// import animeflix from './animeflix'
-import nyaatorrent from './nyaatorrent'
-import kickassanime from './kickassanime'
-import gogoanime from './gogoanime'
+import anime from './anime'
+import manga from './manga'
 
 export default new Set([
-    crunchyroll,
-    animeunity,
+    anime.crunchyroll,
+    anime.animeunity,
     // animeflix
 ])
 

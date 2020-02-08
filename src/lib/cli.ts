@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import yargs from 'yargs'
 import { isUrl } from './utils'
 import animekit from '../lib'

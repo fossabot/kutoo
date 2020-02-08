@@ -2,7 +2,7 @@ import got from 'got'
 import cheerio from 'cheerio'
 import { getDirectLink } from './helper'
 
-import * as d from '../../../declarations'
+import * as d from '../../../../declarations'
 
 function isCompatible(url: string) {
     let urlRegex = /^(http(s)?(:\/\/))?(www\.)?(watch\.)?animeflix\.in(\/.*)?$/
@@ -31,7 +31,7 @@ function getEpisode(url: string) {
             return await getEpisodeInfo(episode.url)
         },
         download: async (path, resolution, progressCallback) => {
-            await downloadEpisode(episode.url, path, resolution, progressCallback)
+            // await downloadEpisode(episode.url, path, resolution, progressCallback)
         }
     }
 

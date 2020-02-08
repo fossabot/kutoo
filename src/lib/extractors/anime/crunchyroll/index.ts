@@ -4,10 +4,10 @@ import got from 'got'
 import { Parser } from 'm3u8-parser'
 
 import { setLanguageCookie, getConfig } from './helper'
-import { downloadManifest } from '../../utils'
+import { downloadManifest } from '../../../utils'
 import { Config } from './config'
 
-import * as d from '../../../declarations'
+import * as d from '../../../../declarations'
 
 function isCompatible(url: string) {
     let urlRegex = /^(http(s)?(:\/\/))?(www\.)?crunchyroll\.com(\/.*)?$/

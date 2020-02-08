@@ -5,7 +5,7 @@ import got from 'got'
 
 import { getDirectLink } from './helper'
 
-import * as d from '../../../declarations'
+import * as d from '../../../../declarations'
 
 function isCompatible(url: string) {
     let urlRegex = /^(http(s)?(:\/\/))?(www\.)?animeunity\.it(\/.*)?$/

@@ -2,8 +2,8 @@
   "name": "animekit",
   "version": "0.0.4",
   "license": "MIT",
-  "main": "./dist/lib/index.js",
-  "types": "./dist/lib/index.d.ts",
+  "main": "./dist/lib/index",
+  "types": "./dist/lib/index",
   "bin": "./dist/lib/cli.js",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
@@ -17,12 +17,12 @@
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.15",
+    "@types/esrever": "^0.2.0",
     "@types/fluent-ffmpeg": "^2.1.12",
     "@types/jest": "^25.1.1",
     "@types/node": "^13.1.2",
     "@types/tough-cookie": "^2.3.6",
     "@types/webpack": "^4.41.5",
-    "clean-webpack-plugin": "^3.0.0",
     "jest": "^25.1.0",
     "ts-jest": "^25.2.0",
     "ts-loader": "^6.2.1",
@@ -35,9 +35,9 @@
   "scripts": {
     "clean": "del-cli dist",
     "test": "jest",
-    "start:cli": "yarn ts-node src/lib/cli.ts",
-    "start:example": "yarn ts-node --files src/examples/index.ts",
-    "build": "yarn webpack",
+    "start:cli": "ts-node src/lib/cli.ts",
+    "start:example": "ts-node --files src/examples/index.ts",
+    "build": "webpack",
     "prepare": "yarn build",
     "version": "git add -A .",
     "postversion": "git push && git push --tags"
