@@ -1,3 +1,5 @@
+## __Warning!__
+__This project is still at a very early stage, expect breaking change with update, code instability and many errors, if you decide to use this library please open a [issue](https://github.com/FedericoMorrone/animekit/issues) for any problem you might find__
 
 
 # Animekit
@@ -83,10 +85,13 @@ This will return the following object
 * [Animeunity](https://animeunity.it/)
 * [Crunchyroll](https://www.crunchyroll.com/)
 
+## Supported manga sites
+* [Manganelo](https://manganelo.com/)
 
 ## Todo
 
-- [ ] Add cli
+- [x] Add cli
+- [ ] Make cli properly work
 - [ ] Add proper documentation
 - [ ] Add support for more sites
 - [ ] Complete this readme file
