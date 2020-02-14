@@ -4,6 +4,26 @@ import fs from 'fs'
 
 import { replaceInvalidChars, nthIndex } from '../../../utils'
 
+import * as d from '../../../../declarations'
+
+function isCompatible(url: string) {
+    return true
+}
+
+async function getChapterInfo(url: string) {
+
+}
+async function getChapter(url: string) {
+    // let chapter: d.Chapter = {
+    //     url: url,
+
+    // }
+}
+
+async function getVolume(url: string) {
+
+}
+
 
 async function getLinks(url: string) {
     let links: string[] = []
@@ -70,3 +90,5 @@ async function downlodPages(url: string, chapter: string, name: string) {
 
     console.timeEnd('download')
 })()
+
+export default { getChapter, getVolume, isCompatible }

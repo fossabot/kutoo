@@ -1,13 +1,14 @@
-import anime from './anime'
-import manga from './manga'
+import animeExtractors from './anime'
+import mangaExtractors from './manga'
 
-export default new Set([
-    anime.crunchyroll,
-    anime.animeunity,
-    // animeflix
+const anime = new Set([
+    animeExtractors.crunchyroll,
+    animeExtractors.animeunity,
 ])
 
-// export default { crunchyroll, nyaatorrent, kickassanime, gogoanime, animeunity, animeflix }
+const manga = new Set([
+    mangaExtractors.manganelo,
+])
 
 
-
+export default { anime, manga }

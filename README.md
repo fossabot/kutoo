@@ -87,6 +87,7 @@ This will return the following object
 
 ## Supported manga sites
 * [Manganelo](https://manganelo.com/)
+* [Mangareader](http://www.mangareader.net/)
 
 ## Todo
 

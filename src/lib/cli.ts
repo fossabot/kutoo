@@ -4,23 +4,37 @@ import animekit from '../lib'
 import path from 'path'
 import * as d from '../declarations'
 
+const resolution: ReadonlyArray<d.resolution> = ['uhd', 'fhd', 'hd', 'sd', 'low', 'ulow']
 var argv = yargs
-    .usage('animekit <url> [option]')
-    .option('p', {
-        alias: 'playlist',
-        description: 'Download playlist instead of single episode',
+    .usage('animekit <url> [options]')
+    .wrap(null)
+    .option('m', {
+        alias: 'manga',
+        description: 'Download a manga',
+        type: 'boolean',
+        default: false
+    })
+    .option('r', {
+        alias: 'resolution',
+        description: 'The resolution of the video',
+        choices: resolution
+    })
+    .option('s', {
+        alias: ['season', 'volume'],
+        description: 'Download whole season/volume instead of single episode/chapter',
         type: 'boolean',
         default: false
     })
     .option('o', {
         alias: 'out',
         description:
-            'Path to the video',
-        type: 'string'
+            'Output directory, defaults to the current one',
+        type: 'string',
+        default: '.'
     })
     .option('d', {
         alias: 'dry',
-        description: 'If true will output info without downloading',
+        description: 'Output only info without downloading',
         type: 'boolean',
         default: false
     })
@@ -47,7 +61,7 @@ async function doDownload(url: string, argv: any) {
         process.exit(1)
     }
     let info = await episode.info()
-    let dest = path.resolve(argv.o) || path.resolve('.')
+    let dest = path.resolve(argv.o)
     await episode.download(dest, 'fhd', (progress) => {
         console.log(progress.percent)
     })
