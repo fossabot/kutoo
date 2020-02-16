@@ -67,6 +67,7 @@ let cliConfig = {
 let cliBundle = {
     mode: 'production',
     entry: './src/lib/cli.ts',
+    // externals: nodeExternals(),
     module: {
         rules: [
             {
@@ -81,7 +82,7 @@ let cliBundle = {
         extensions: ['.ts', '.js'],
     },
     output: {
-        path: path.resolve(__dirname, 'dist/lib'),
+        path: path.resolve(__dirname, 'release'),
         filename: 'cli.bundle.js'
     },
     stats: {
@@ -91,4 +92,4 @@ let cliBundle = {
     target: 'node'
 };
 
-module.exports = [libraryConfig, cliConfig]
+module.exports = [libraryConfig, cliConfig, cliBundle]

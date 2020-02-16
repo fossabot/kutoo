@@ -4,3 +4,4 @@ cli
 dist
 temp
 !lib/**/*
+release
