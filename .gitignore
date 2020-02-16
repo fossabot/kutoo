@@ -1,7 +1,6 @@
 *.log
 node_modules
-cli
 dist
 temp
-!lib/**/*
 release
+!lib/**/*
