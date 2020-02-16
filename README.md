@@ -10,10 +10,14 @@ __This project is still at a very early stage, expect breaking change with updat
 
 Animekit is an easy to use library to download anime and manga from various websites.
 The main reason behind this project is to be able to consume anime and manga offline and without any intrussive ads or annoying popup.
-A desktop gui written in electron is avaible [`here`](https://github.com/FedericoMorrone/animekit-desktop) while a mobile port can be found [`here`](https://github.com/FedericoMorrone/animekit-mobile)
+A desktop gui written in electron is avaible [here](https://github.com/FedericoMorrone/animekit-desktop) while a mobile port can be found [here](https://github.com/FedericoMorrone/animekit-mobile)
 
 
 ## Getting Started
+
+Download a compiled binary [here](https://github.com/FedericoMorrone/animekit/releases)
+
+or
 
 Install Animekit using [`yarn`](https://classic.yarnpkg.com/):
 
@@ -21,7 +25,7 @@ Install Animekit using [`yarn`](https://classic.yarnpkg.com/):
 yarn add global animekit
 ```
 
-Or [`npm`](https://www.npmjs.com/):
+with [`npm`](https://www.npmjs.com/):
 
 ```bash
 npm install animekit -g
