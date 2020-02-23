@@ -1,4 +1,4 @@
-import { URL, parse } from 'url';
+import { URL, parse as parseUrl } from 'url';
 
 
 export function getStringBewtween(str: string, start: string, end: string, shift?: number) {
@@ -9,10 +9,10 @@ export function getStringBewtween(str: string, start: string, end: string, shift
     return data.substring(0, data.indexOf(end) + shift);
 }
 
-export function isUrl(s: string, protocols = ['http', 'https']) {
+export function isUrl(url: string, protocols = ['http', 'https']) {
     try {
-        new URL(s);
-        const parsed = parse(s);
+        new URL(url);
+        const parsed = parseUrl(url);
         return protocols
             ? parsed.protocol
                 ? protocols.map(x => `${x.toLowerCase()}:`).includes(parsed.protocol)
@@ -23,17 +23,18 @@ export function isUrl(s: string, protocols = ['http', 'https']) {
     }
 };
 
-export function replaceInvalidChars(str: string, v?: string) {
-    if (!v) {
-        v = ''
-    }
-    return str.replace(/[\~\#\%\&\*\{\}\\\:\<\>\?\/\+\|]/g, v);
-}
-
 export function nthIndex(str: string, pat: string, n: number) {
     var L = str.length, i = -1;
     while (n-- && i++ < L) {
         i = str.indexOf(pat, i);
     }
     return i;
+}
+
+export function getDomain(url: string) {
+    if (!isUrl(url)) {
+        throw new Error('Invalid url')
+    }
+    let parsed = parseUrl(url)
+    return parsed.host
 }

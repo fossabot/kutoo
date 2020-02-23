@@ -5,12 +5,8 @@ import got from 'got'
 
 import { getDirectLink } from './helper'
 
-import * as d from '../../../../declarations'
+import * as d from '../../../types'
 
-function isCompatible(url: string) {
-    let urlRegex = /^(http(s)?(:\/\/))?(www\.)?animeunity\.it(\/.*)?$/
-    return urlRegex.test(url)
-}
 
 async function getEpisodeInfo(url: string) {
     let info: d.EpisodeInfo = {
@@ -82,18 +78,8 @@ async function getSeasons(url: string) {
     return seasons;
 }
 
+async function download(url: string, path: string){
 
-// async function updateLibrary() {
-//     let response = await got(url)
-// const $ = cheerio.load(response.body)
+}
 
-//     let links: any = {}
-//     $('.archive-card').each((i: number, card: any) => {
-//         let link = $(card).find('a').attr('href')
-//         let title = $(card).find('.card-title > b').text()
-//         links[title] = `https://www.animeunity.it/${link}`
-//     });
-//     return links
-// }
-
-export default { getSeasons, getEpisode, isCompatible }
+export default { getSeasons, getEpisode }

@@ -2,17 +2,17 @@
   "name": "animekit",
   "version": "0.0.5",
   "license": "MIT",
-  "main": "./dist/lib/index",
-  "types": "./dist/lib/index",
-  "bin": "./dist/lib/cli.js",
+  "main": "./dist/src",
+  "types": "./dist/src",
+  "bin": "./dist/src/cli.js",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
-    "del-cli": "^3.0.0",
     "fluent-ffmpeg": "git://github.com/schaermu/node-fluent-ffmpeg.git",
     "got": "^10.2.2",
     "m3u8-parser": "^4.4.0",
     "m3u8stream": "^0.6.4",
     "pdfkit": "^0.11.0",
+    "sanitize-filename": "^1.6.3",
     "tough-cookie": "^3.0.1",
     "yargs": "^15.1.0"
   },
@@ -20,40 +20,53 @@
     "@types/cheerio": "^0.22.15",
     "@types/esrever": "^0.2.0",
     "@types/fluent-ffmpeg": "^2.1.12",
-    "@types/jest": "^25.1.1",
-    "@types/node": "^13.1.2",
+    "@types/jest": "^25.1.3",
+    "@types/node": "^13.7.4",
     "@types/tough-cookie": "^2.3.6",
-    "@types/webpack": "^4.41.5",
+    "@types/webpack": "^4.41.6",
+    "@types/yargs": "^15.0.3",
+    "app-builder-bin": "^3.5.2",
+    "coveralls": "^3.0.9",
+    "del-cli": "^3.0.0",
     "jest": "^25.1.0",
+    "np": "^6.1.0",
+    "nyc": "^15.0.0",
     "pkg": "^4.4.3",
-    "ts-jest": "^25.2.0",
+    "ts-jest": "^25.2.1",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.5.4",
     "typescript": "^3.7.4",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11",
     "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
-    "clean": "del-cli dist",
-    "test": "jest",
+    "clean": "del-cli dist release .nyc_output",
+    "test": "tsc --noEmit && nyc jest",
     "start:cli": "ts-node src/lib/cli.ts",
     "start:example": "ts-node --files src/examples/index.ts",
-    "build": "webpack",
+    "prepare": "yarn build",
+    "release": "np",
+    "build": "yarn clean && webpack",
     "package:all": "yarn package:linux && yarn package:win && yarn package:macos",
     "package:linux": "pkg --targets node12-linux --output release/animekit-linux release/cli.bundle.js",
     "package:win": "pkg --targets node12-win --output release/animekit-win release/cli.bundle.js",
     "package:win:x86": "pkg --targets node12-win-x86 --output release/animekit-win-x86 release/cli.bundle.js",
     "package:macos": "pkg --targets node12-macos --output release/animekit-macos release/cli.bundle.js",
-    "dist": "yarn build && yarn package:all",
-    "prepare": "yarn build",
-    "version": "git add -A .",
-    "postversion": "git push && git push --tags"
+    "dist": "yarn build && yarn package:all"
   },
   "files": [
     "dist/",
     "LICENSE"
   ],
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "**/test/**"
+    ]
+  },
   "repository": "https://github.com/FedericoMorrone/animekit.git",
   "author": "Federico Morrone <flickmor@gmail.com>"
 }

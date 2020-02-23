@@ -1,10 +1,10 @@
 import yargs from 'yargs'
 import { isUrl } from './utils'
-import animekit from '../lib'
+import animekit from './index'
 import path from 'path'
-import * as d from '../declarations'
+import { resolution } from './types'
 
-const resolution: ReadonlyArray<d.resolution> = ['uhd', 'fhd', 'hd', 'sd', 'low', 'ulow']
+const resolution: ReadonlyArray<resolution> = ['uhd', 'fhd', 'hd', 'sd', 'low', 'ulow']
 var argv = yargs
     .usage('animekit <url> [options]')
     .wrap(null)
@@ -56,13 +56,13 @@ if (isUrl(url)) {
 }
 
 async function doDownload(url: string, argv: any) {
-    let episode = await animekit.getEpisode(url)
-    if (!episode) {
-        process.exit(1)
-    }
-    let info = await episode.info()
-    let dest = path.resolve(argv.o)
-    await episode.download(dest, 'fhd', (progress) => {
-        console.log(progress.percent)
-    })
+    // let episode = await animekit.getEpisode(url)
+    // if (!episode) {
+    //     process.exit(1)
+    // }
+    // // let info = await episode.info()
+    // let dest = path.resolve(argv.o)
+    // await episode.download(dest, 'fhd', (progress: any) => {
+    //     console.log(progress.percent)
+    // })
 }

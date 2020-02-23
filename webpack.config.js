@@ -4,8 +4,7 @@ const nodeExternals = require('webpack-node-externals')
 
 let libraryConfig = {
     mode: 'production',
-    entry: './src/lib/index.ts',
-    devtool: 'inline-source-map',
+    entry: './src/index.ts',
     externals: [nodeExternals()],
     module: {
         rules: [
@@ -24,7 +23,7 @@ let libraryConfig = {
         library: 'animekit',
         libraryTarget: 'commonjs2',
         libraryExport: "default",
-        path: path.resolve(__dirname, 'dist/lib'),
+        path: path.resolve(__dirname, 'dist'),
     },
     target: 'node',
 
@@ -32,7 +31,7 @@ let libraryConfig = {
 
 let cliConfig = {
     mode: 'production',
-    entry: './src/lib/cli.ts',
+    entry: './src/cli.ts',
     externals: [{ animekit: '../lib'},nodeExternals()],
     plugins: [
         new webpack.BannerPlugin({
@@ -54,7 +53,7 @@ let cliConfig = {
         extensions: ['.ts', '.js'],
     },
     output: {
-        path: path.resolve(__dirname, 'dist/lib'),
+        path: path.resolve(__dirname, 'dist'),
         filename: 'cli.js'
     },
     stats: {
@@ -66,7 +65,7 @@ let cliConfig = {
 
 let cliBundle = {
     mode: 'production',
-    entry: './src/lib/cli.ts',
+    entry: './src/cli.ts',
     // externals: nodeExternals(),
     module: {
         rules: [

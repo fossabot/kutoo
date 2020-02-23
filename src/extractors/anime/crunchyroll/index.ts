@@ -1,13 +1,14 @@
 import cheerio from 'cheerio'
 import ffmpeg from 'fluent-ffmpeg'
 import got from 'got'
+//@ts-ignore
 import { Parser } from 'm3u8-parser'
 
 import { setLanguageCookie, getConfig } from './helper'
 import { downloadManifest } from '../../../utils'
 import { Config } from './config'
 
-import * as d from '../../../../declarations'
+import * as d from '../../../types'
 
 function isCompatible(url: string) {
     let urlRegex = /^(http(s)?(:\/\/))?(www\.)?crunchyroll\.com(\/.*)?$/
@@ -89,7 +90,7 @@ function getEpisode(url: string) {
         info: async () => {
             return await getEpisodeInfo(episode.url)
         },
-        download: async (path, resolution, progressCallback) => {
+        download: async (path: string, resolution: d.resolution, progressCallback: any) => {
             const info = await episode.info()
             await downloadEpisode(info.directUrl, path, resolution, progressCallback)
         }

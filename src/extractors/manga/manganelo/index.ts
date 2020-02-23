@@ -2,9 +2,10 @@ import got from 'got'
 import cheerio from 'cheerio'
 import fs from 'fs'
 
-import { replaceInvalidChars, nthIndex } from '../../../utils'
+import { nthIndex } from '../../../utils'
 
-import * as d from '../../../../declarations'
+import * as d from '../../../types'
+import sanitize from 'sanitize-filename'
 
 function isCompatible(url: string) {
     return true
@@ -64,7 +65,7 @@ async function downlodPages(url: string, chapter: string, name: string) {
     let links = await getPages(url)
     for (const lnk of links) {
         let fileName = lnk.substring(nthIndex(lnk, '/', 7) + 1)
-        let path = replaceInvalidChars(name) + '/' + replaceInvalidChars(chapter)
+        let path = sanitize(name) + '/' + sanitize(chapter)
         console.log(fileName, path)
         await fs.promises.mkdir('./temp/' + path, { recursive: true })
 
