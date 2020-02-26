@@ -1,3 +1,3 @@
-import manganelo from './manganelo'
+// import manganelo from './manganelo'
 
-export default { manganelo }
+// export default { manganelo }

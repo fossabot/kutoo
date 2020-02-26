@@ -1,11 +1,11 @@
-import cheerio from 'cheerio';
-import fs from 'fs';
-import { resolve as resolvePath } from 'path'
+import cheerio from 'cheerio'
+// import fs from 'fs'
+// import { resolve as resolvePath } from 'path'
 import got from 'got'
 
 import { createFileName, downloadFile } from '../../../utils'
 
-import { downloadOptions, EpisodeInfo, resolution } from '../../../types'
+import { downloadOptionsDefined, EpisodeInfo } from '../../../types'
 
 // async function getSeasons(url: string) {
 //     let titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > ' +
@@ -35,45 +35,46 @@ import { downloadOptions, EpisodeInfo, resolution } from '../../../types'
 
 //     return seasons;
 // }
-async function getInfo(url: string) {
-
-    let titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > ' +
+async function getInfo (url: string): Promise<EpisodeInfo> {
+  const titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > ' +
         'div.col-lg-4.col-sm-12.custom-padding-bottom > div > div.card-body.bg-light-gray > p:nth-child(2)'
 
+  const response = await got(url)
+  const $ = cheerio.load(response.body)
 
-    const response = await got(url)
-    const $ = cheerio.load(response.body)
+  const directUrl = $('#video-player > source').attr('src') ?? ''
+  const episodeNumber = parseFloat($('a.btn-purple').text())
+  const title = $(titleSelector).html() ?? ''
+    .replace('<b>TITOLO: </b>', '')
+    .replace(/\s\s+/g, ' ')
+    .replace(/\s/, '')
 
-    let directUrl = $('#video-player > source').attr('src')!;
-    let episodeNumber = parseFloat($('a.btn-purple').text())
-    let title = $(titleSelector).html()!
-        .replace('<b>TITOLO: </b>', '')
-        .replace(/\s\s+/g, ' ')
-        .replace(/\s/, '')
-
-
-    let info: EpisodeInfo = {
-        url: url,
-        directUrl: directUrl,
-        resolution: ['hd'],
-        title: title,
-        name: title,
-        ext: 'mp4',
-        number: episodeNumber,
-        subtitles: {
-            type: 'burned'
-        }
+  const info: EpisodeInfo = {
+    url: url,
+    directUrl: directUrl,
+    resolution: ['hd'],
+    title: title,
+    name: title,
+    ext: 'mp4',
+    number: episodeNumber,
+    subtitles: {
+      type: 'burned'
     }
+  }
 
-    return info
+  return info
 }
-async function download(url: string, path: string, options: downloadOptions) {
+async function download (url: string, path: string, options: downloadOptionsDefined): Promise<void> {
+  const info = await getInfo(url)
 
-    let info = await getInfo(url)
-    const fileName = createFileName(info, options.filePattern!)
-
+  if (options.content === 0 || options.content === 'episode') {
+    const fileName = createFileName(info, options.filePattern)
     await downloadFile(info.directUrl, path, fileName)
-}
+  } else if (options.content === 1 || options.content === 'season') {
 
+  } else {
+    throw new Error()
+  }
+}
 
 export default { download, getInfo }
