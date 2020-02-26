@@ -5,4 +5,6 @@ import nyaatorrent from './nyaatorrent'
 import kickassanime from './kickassanime'
 import gogoanime from './gogoanime'
 
-export default { crunchyroll, animeunity, animeflix, nyaatorrent, kickassanime, gogoanime }
+const extractors: any = { animeunity, crunchyroll, animeflix, nyaatorrent, kickassanime, gogoanime }
+
+export default extractors

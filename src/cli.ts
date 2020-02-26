@@ -1,54 +1,53 @@
 import yargs from 'yargs'
 import { isUrl } from './utils'
 import animekit from './index'
-import path from 'path'
-import { resolution } from './types'
+import { resolution, contentType } from './types'
 
-const resolution: ReadonlyArray<resolution> = ['uhd', 'fhd', 'hd', 'sd', 'low', 'ulow']
+const resolutionChoices: ReadonlyArray<resolution> = ['uhd', 'fhd', 'hd', 'sd', 'low', 'ulow']
+const contentChoices: ReadonlyArray<contentType> = [0, 1, 'episode', 'season', 'page', 'chapter', 'volume']
+
 var argv = yargs
-    .usage('animekit <url> [options]')
-    .wrap(null)
-    .option('m', {
-        alias: 'manga',
-        description: 'Download a manga',
-        type: 'boolean',
-        default: false
-    })
-    .option('r', {
-        alias: 'resolution',
-        description: 'The resolution of the video',
-        choices: resolution
-    })
-    .option('s', {
-        alias: ['season', 'volume'],
-        description: 'Download whole season/volume instead of single episode/chapter',
-        type: 'boolean',
-        default: false
-    })
-    .option('o', {
-        alias: 'out',
-        description:
-            'Output directory, defaults to the current one',
-        type: 'string',
-        default: '.'
-    })
-    .option('d', {
-        alias: 'dry',
-        description: 'Output only info without downloading',
-        type: 'boolean',
-        default: false
+    .scriptName("animekit")
+    .usage('$0 url [options]')
+    .wrap(yargs.terminalWidth())
+    .options({
+        'resolution': {
+            alias: 'r',
+            description: 'The resolution of the video',
+            choices: resolutionChoices,
+            default: 'fhd'
+        }, 'content': {
+            alias: 'c',
+            description: 'What type of content you\'re trying to download',
+            choices: contentChoices,
+            default: 0
+        }, 'out': {
+            alias: 'o',
+            description: 'Output directory, defaults to the current one',
+            type: 'string',
+            default: './'
+        }, 'dry': {
+            alias: 'd',
+            description: 'Output only info without downloading',
+            type: 'boolean',
+            default: false
+        }, 'pattern': {
+            alias: 'p',
+            description: 'File pattern for downloaded files',
+            type: 'string',
+            default: '<title>_Ep_<number>.<ext>'
+        }
     })
     .demandCommand(1)
     .help()
-    .alias('h', 'help')
+    .alias('help', 'h')
     .version()
-    .alias('v', 'version')
+    .alias('version', 'v')
     .detectLocale(false).argv
 
-var url = argv._[0]
+const url = argv._[0]
 
 if (isUrl(url)) {
-    console.log(url)
     doDownload(url, argv)
 } else {
     console.log(`Error: '${url}' is not a valid url`)
@@ -56,13 +55,8 @@ if (isUrl(url)) {
 }
 
 async function doDownload(url: string, argv: any) {
-    // let episode = await animekit.getEpisode(url)
-    // if (!episode) {
-    //     process.exit(1)
-    // }
-    // // let info = await episode.info()
-    // let dest = path.resolve(argv.o)
-    // await episode.download(dest, 'fhd', (progress: any) => {
-    //     console.log(progress.percent)
-    // })
+    await animekit.download(url, argv.out, {
+        filePattern: argv.pattern,
+        resolution: argv.resolution,
+    })
 }

@@ -1,29 +1,30 @@
-import cheerio from 'cheerio'
 import ffmpeg from 'fluent-ffmpeg'
 import got from 'got'
-//@ts-ignore
 import { Parser } from 'm3u8-parser'
 
+import { resolve as resolvePath } from 'path'
+
 import { setLanguageCookie, getConfig } from './helper'
-import { downloadManifest } from '../../../utils'
+import { downloadManifest, createFileName } from '../../../utils'
 import { Config } from './config'
 
-import * as d from '../../../types'
+import { EpisodeInfo, downloadOptions } from '../../../types'
 
-function isCompatible(url: string) {
-    let urlRegex = /^(http(s)?(:\/\/))?(www\.)?crunchyroll\.com(\/.*)?$/
-    return urlRegex.test(url)
+async function getInfo(url: string) {
+    let config: Config = await getConfig(url)
 
-}
-
-
-async function getEpisodeInfo(url: string) {
-    let info: d.EpisodeInfo = {
+    let info: EpisodeInfo = {
         url: url,
         directUrl: '',
-        captions: {}
+        resolution: ['fhd'],
+        name: config.metadata.title,
+        title: config.metadata.title,
+        number: parseFloat(config.metadata.episode_number),
+        ext: 'mp4',
+        subtitles: {
+            type: 'external'
+        }
     }
-    let config: Config = await getConfig(url)
 
     config.streams.forEach((stream) => {
         if (stream.format == 'multitrack_adaptive_hls_v2' && stream.hardsub_lang == null) {
@@ -32,18 +33,19 @@ async function getEpisodeInfo(url: string) {
     })
 
     config.subtitles.forEach((sub) => {
-        info.captions[sub.language] = sub.url
+        info.subtitles[sub.language] = sub.url
     })
 
     return info
 }
 
 
-async function downloadEpisode(url: string, path: string, resolution: d.resolution, progressCallback?: (progress: any) => void) {
+async function download(url: string, path: string, options: downloadOptions) {
+    let info = await getInfo(url)
     let videoWidth: number
     let videoHeight: number
 
-    switch (resolution) {
+    switch (options.resolution) {
         case 'fhd': case 'uhd':
             videoWidth = 1920
             videoHeight = 1080
@@ -79,57 +81,42 @@ async function downloadEpisode(url: string, path: string, resolution: d.resoluti
         return playlist.attributes.RESOLUTION.height === videoHeight &&
             playlist.attributes.RESOLUTION.width === videoWidth
     })
-    // console.log(link.uri)
-    downloadManifest(link.uri, path+ '/video.mp4', false)
+    const fileName = createFileName(info, options.filePattern!)
+    downloadManifest(link.uri, resolvePath(path, fileName), false)
 
 }
 
-function getEpisode(url: string) {
-    let episode: d.Episode = {
-        url: url,
-        info: async () => {
-            return await getEpisodeInfo(episode.url)
-        },
-        download: async (path: string, resolution: d.resolution, progressCallback: any) => {
-            const info = await episode.info()
-            await downloadEpisode(info.directUrl, path, resolution, progressCallback)
-        }
-    }
+// async function getSeasons(url: string) {
+//     const langRegex = /(?<=\.com)(.*)(?=\/)/
+//     url = url.replace(langRegex, '')
 
-    return episode
-}
+//     let cookieJar = await setLanguageCookie('enUS')
 
-async function getSeasons(url: string) {
-    const langRegex = /(?<=\.com)(.*)(?=\/)/
-    url = url.replace(langRegex, '')
+//     const response = await got(url, { cookieJar })
+//     const $ = cheerio.load(response.body)
 
-    let cookieJar = await setLanguageCookie('enUS')
+//     let seasons: Season[] = []
 
-    const response = await got(url, { cookieJar })
-    const $ = cheerio.load(response.body)
+//     $('#showview_content_videos > ul > li').each((i: number, el: CheerioElement) => {
+//         let title = $(el).children('a').attr('title')!
 
-    let seasons: d.Season[] = []
+//         let episodes: d.Episode[] = []
 
-    $('#showview_content_videos > ul > li').each((i: number, el: CheerioElement) => {
-        let title = $(el).children('a').attr('title')!
+//         $(`#showview_content_videos > ul > li:has(a[title="${title}"]) > ul a`).each((i: number, el: CheerioElement) => {
+//             let link = 'https://www.crunchyroll.com' + $(el).attr('href')
 
-        let episodes: d.Episode[] = []
+//             let episode = getEpisode(link)
 
-        $(`#showview_content_videos > ul > li:has(a[title="${title}"]) > ul a`).each((i: number, el: CheerioElement) => {
-            let link = 'https://www.crunchyroll.com' + $(el).attr('href')
+//             episodes.push(episode)
+//         })
+//         seasons[i] = {
+//             title: title,
+//             episodes: episodes
+//         }
+//     });
 
-            let episode = getEpisode(link)
-
-            episodes.push(episode)
-        })
-        seasons[i] = {
-            title: title,
-            episodes: episodes
-        }
-    });
-
-    return seasons
-}
+//     return seasons
+// }
 
 
 
@@ -209,4 +196,4 @@ async function downloadFromConfig(config: any, options: { resolution: string, ha
     command.run()
 }
 
-export default { getSeasons, getEpisode, isCompatible }
+export default { download, getInfo }

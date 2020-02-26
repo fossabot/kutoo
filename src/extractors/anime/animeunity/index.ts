@@ -1,85 +1,79 @@
 import cheerio from 'cheerio';
 import fs from 'fs';
-import { resolve } from 'path'
+import { resolve as resolvePath } from 'path'
 import got from 'got'
 
-import { getDirectLink } from './helper'
+import { createFileName, downloadFile } from '../../../utils'
 
-import * as d from '../../../types'
+import { downloadOptions, EpisodeInfo, resolution } from '../../../types'
 
+// async function getSeasons(url: string) {
+//     let titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > ' +
+//         'div.col-lg-4.col-sm-12.custom-padding-bottom > div > div.card-body.bg-light-gray > p:nth-child(2)'
 
-async function getEpisodeInfo(url: string) {
-    let info: d.EpisodeInfo = {
-        url: url,
-        directUrl: await getDirectLink(url),
-        captions: {}
-    }
+//     const response = await got(url)
+//     const $ = cheerio.load(response.body)
 
-    return info
-}
+//     let title = $(titleSelector).html()!.replace('<b>TITOLO: </b>', '').replace(/\s\s+/g, ' ').replace(/\s/, '')
+//     let links: string[] = []
+//     let episodes: d.Episode[] = []
+//     let seasons: d.Season[] = []
 
-async function downloadEpisode(url: string, path: string, resolution: d.resolution, progressCallback?: (progress: any) => void) {
-    const fileName = url.substring(url.lastIndexOf('/') + 1)
+//     $('.ep-box > a').each((i: number, el: CheerioElement) => {
+//         links.push(`https://www.animeunity.it/${$(el).attr('href')}`);
+//     });
 
-    path = resolve(path)
+//     for (let i = 0; i < links.length; i++) {
+//         let episode = getEpisode(links[i])
+//         episodes.push(episode)
+//     }
 
-    await fs.promises.mkdir(path, { recursive: true })
+//     seasons[0] = {
+//         episodes: episodes,
+//         title: title
+//     }
 
-    await got.stream(url)
-        .on('downloadProgress', progress => {
-            if (progressCallback) {
-                progressCallback(progress)
-            }
-        })
-        .pipe(fs.createWriteStream(path + '\\' + fileName))
-}
+//     return seasons;
+// }
+async function getInfo(url: string) {
 
-function getEpisode(url: string) {
-    let episode: d.Episode = {
-        url: url,
-        info: async () => {
-            return await getEpisodeInfo(episode.url)
-        },
-        download: async (path, resolution, progressCallback) => {
-            let info = await episode.info()
-            await downloadEpisode(info.directUrl, path, resolution, progressCallback)
-        }
-    }
-
-    return episode
-}
-
-async function getSeasons(url: string) {
     let titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > ' +
         'div.col-lg-4.col-sm-12.custom-padding-bottom > div > div.card-body.bg-light-gray > p:nth-child(2)'
+
 
     const response = await got(url)
     const $ = cheerio.load(response.body)
 
-    let title = $(titleSelector).html()!.replace('<b>TITOLO: </b>', '').replace(/\s\s+/g, ' ').replace(/\s/, '')
-    let links: string[] = []
-    let episodes: d.Episode[] = []
-    let seasons: d.Season[] = []
+    let directUrl = $('#video-player > source').attr('src')!;
+    let episodeNumber = parseFloat($('a.btn-purple').text())
+    let title = $(titleSelector).html()!
+        .replace('<b>TITOLO: </b>', '')
+        .replace(/\s\s+/g, ' ')
+        .replace(/\s/, '')
 
-    $('.ep-box > a').each((i: number, el: CheerioElement) => {
-        links.push(`https://www.animeunity.it/${$(el).attr('href')}`);
-    });
 
-    for (let i = 0; i < links.length; i++) {
-        let episode = getEpisode(links[i])
-        episodes.push(episode)
+    let info: EpisodeInfo = {
+        url: url,
+        directUrl: directUrl,
+        resolution: ['hd'],
+        title: title,
+        name: title,
+        ext: 'mp4',
+        number: episodeNumber,
+        subtitles: {
+            type: 'burned'
+        }
     }
 
-    seasons[0] = {
-        episodes: episodes,
-        title: title
-    }
+    return info
+}
+async function download(url: string, path: string, options: downloadOptions) {
 
-    return seasons;
+    let info = await getInfo(url)
+    const fileName = createFileName(info, options.filePattern!)
+
+    await downloadFile(info.directUrl, path, fileName)
 }
 
-async function download(url: string, path: string){
 
-}
-
-export default { getSeasons, getEpisode }
+export default { download, getInfo }

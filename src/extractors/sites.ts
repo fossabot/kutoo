@@ -1,6 +1,11 @@
-{
+interface sites {
+    [key: string]: string
+}
+
+export const sites: sites = {
     "9anime.to": "anime/9anime",
     "animeflix.in": "anime/animeflix",
+    "animeunity.it": "anime/animeunity",
     "gogoanime.video": "anime/gogoanime",
     "mangadex.org": "manga/mangadex",
     "nhentai.net": "manga/nhentai",

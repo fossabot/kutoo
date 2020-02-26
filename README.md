@@ -13,9 +13,9 @@ The main reason behind this project is to be able to consume anime and manga off
 A desktop gui written in electron is avaible [here](https://github.com/FedericoMorrone/animekit-desktop) while a mobile port can be found [here](https://github.com/FedericoMorrone/animekit-mobile)
 
 
-## Getting Started
+## Install
 
-Download a compiled binary [here](https://github.com/FedericoMorrone/animekit/releases)
+Download a pre-compiled binary [here](https://github.com/FedericoMorrone/animekit/releases)
 
 or
 
@@ -30,42 +30,29 @@ with [`npm`](https://www.npmjs.com/):
 ```bash
 npm install animekit -g
 ```
+for more installation istructions check [INSTALLATION](INSTALLATION.md)
 
-Then you can just do
-
+## Command line usage
 ```bash
 animekit <url> -o <path>
 ```
 
 ## Pragmatic usage
 
-To download an episode you first need to create an episode object
+Using animekit is very simple, just call the download function with a url and a path
 
 ```javascript
 const animekit = require('animekit')
 
 let url = 'https://www.crunchyroll.com/darling-in-the-franxx/episode-24-never-let-me-go-769621'
-let episode = animekit.getEpisode(url)
-```
-
-Then you can call the download method of that object by specifing a location to download it and resolution
-
-```javascript
-episode.download('./anime' , 'fhd')
-```
-
-You can also track the progress with a callback function
-
-```javascript
-episode.download('./anime' , 'fhd', (progress) => {
-    console.log(progress.percent)
-})
+animekit.download(url, './videos')
 ```
 
 To get the information about an episode you can use the info method
 
 ```javascript
-let info = episode.info()
+let url = 'https://www.crunchyroll.com/darling-in-the-franxx/episode-24-never-let-me-go-769621'
+let info = await animekit.getInfo(url)
 ```
 
 This will return the following object 
@@ -76,7 +63,7 @@ This will return the following object
     url: 'https://www.example.com/episode-1',
     // url to the video/playlist file
     directUrl: 'https://www.example.com/episode-1/video.mp4',
-    //Links to captions files
+    //Links to sub files
     captions:{
         enUS: 'https://www.example.com/episode-1/sub/enUS.ass',
         itIT: 'https://www.example.com/episode-1/sub/itIT.ass'
@@ -96,7 +83,7 @@ This will return the following object
 ## Todo
 
 - [x] Add cli
-- [ ] Make cli properly work
+- [x] Make cli properly work
 - [ ] Add proper documentation
 - [ ] Add support for more sites
 - [ ] Complete this readme file

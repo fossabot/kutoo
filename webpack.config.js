@@ -22,7 +22,6 @@ let libraryConfig = {
         filename: 'index.js',
         library: 'animekit',
         libraryTarget: 'commonjs2',
-        libraryExport: "default",
         path: path.resolve(__dirname, 'dist'),
     },
     target: 'node',

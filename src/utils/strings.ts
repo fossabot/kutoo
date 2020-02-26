@@ -36,5 +36,5 @@ export function getDomain(url: string) {
         throw new Error('Invalid url')
     }
     let parsed = parseUrl(url)
-    return parsed.host
+    return parsed.host!
 }
