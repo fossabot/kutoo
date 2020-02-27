@@ -35,7 +35,7 @@
     "eslint-plugin-promise": "4",
     "eslint-plugin-standard": "4",
     "jest": "^25.1.0",
-    "np": "^6.1.0",
+    "np": "^6.2.0",
     "nyc": "^15.0.0",
     "pkg": "^4.4.3",
     "ts-jest": "^25.2.1",
