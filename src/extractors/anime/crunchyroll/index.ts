@@ -1,5 +1,6 @@
 // import ffmpeg from 'fluent-ffmpeg'
 import got from 'got'
+// @ts-ignore
 import { Parser } from 'm3u8-parser'
 
 import { resolve as resolvePath } from 'path'
@@ -70,18 +71,17 @@ async function download (url: string, path: string, options: downloadOptionsDefi
   }
 
   const parser = new Parser()
-  const response = await got(url)
+  const response = await got(info.directUrl)
   const streamUrl = response.body
   parser.push(streamUrl)
   parser.end()
   const mainPlaylist = parser.manifest
-
   const link = mainPlaylist.playlists.find((playlist: any) => {
     return playlist.attributes.RESOLUTION.height === videoHeight &&
             playlist.attributes.RESOLUTION.width === videoWidth
   })
   const fileName = createFileName(info, options.filePattern)
-  downloadManifest(link.uri, resolvePath(path, fileName), false)
+  downloadManifest(link.uri, resolvePath(path, fileName), true)
 }
 
 // async function getSeasons(url: string) {
