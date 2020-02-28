@@ -49,16 +49,18 @@ const argv = yargs
   .alias('version', 'v')
   .detectLocale(false).argv
 
-const url = argv._[0]
+const urls = argv._
 
-if (isUrl(url)) {
-  doDownload(url, argv)
-    .catch(err => {
-      throw err
-    })
-} else {
-  console.log(`Error: '${url}' is not a valid url`)
-  process.exit(1)
+for (const url of urls) {
+  if (isUrl(url)) {
+    doDownload(url, argv)
+      .catch(err => {
+        throw err
+      })
+  } else {
+    console.log(`Error: '${url}' is not a valid url`)
+    process.exit(1)
+  }
 }
 
 async function doDownload (url: string, argv: any): Promise<void> {
