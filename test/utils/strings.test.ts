@@ -1,4 +1,4 @@
-import {isUrl, getStringBewtween} from '../../src/utils'
+import {isUrl} from '../../src/utils'
 
 describe('given a string', ()=>{
     const validUrl = 'https://www.example.com'

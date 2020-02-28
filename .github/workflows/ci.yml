@@ -25,7 +25,12 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: yarn install
+      - name: run tests
       - run: yarn test
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
   # release:
   #   name: Create Release
   #   runs-on: ubuntu-latest

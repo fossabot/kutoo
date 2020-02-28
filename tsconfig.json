@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
+        "module": "CommonJS",
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "declaration": true,
@@ -8,11 +8,11 @@
         "newLine": "lf",
         "strict": true,
         "noImplicitAny": true,
-        // "noUnusedLocals": true,
-        // // "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        // "noUnusedParameters": true,
         // "noFallthroughCasesInSwitch": true,
-        // "noEmitOnError": true,
-        // "forceConsistentCasingInFileNames": true,
+        "noEmitOnError": true,
+        "forceConsistentCasingInFileNames": true,
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true,
         "outDir": "dist",

@@ -2,5 +2,6 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   rootDir: '.',
-  roots: ['<rootDir>/test']
+  roots: ['<rootDir>/test'],
+  collectCoverage: true
 }

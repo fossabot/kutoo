@@ -36,8 +36,10 @@ async function getInfo (url: string): Promise<any> {
   }
 }
 // Default export for typescript
-export default { download, getInfo }
+
+const got = { download, getInfo }
+export default got
 
 // Exports for commonjs
-module.exports = { download, getInfo }
-module.exports.default = { download, getInfo }
+module.exports = got
+module.exports.default = got
