@@ -2,8 +2,20 @@ import got from 'got'
 import cheerio from 'cheerio'
 // import { getDirectLink } from './helper'
 
-import { createFileName, downloadFile } from '../../../utils'
-import { EpisodeInfo, downloadOptionsDefined } from '../../../types'
+import { createFileName, downloadFile } from '../../utils'
+import { EpisodeInfo, downloadOptionsDefined } from '../../types'
+
+// async function getDirectLink (url: string): Promise<any> {
+//   const response = await got(url)
+//   const $ = cheerio.load(response.body)
+
+//   const selector = url.substring(url.lastIndexOf('/') + 1) + ' > div'
+//   const data = $(selector).attr('data-item')
+//   if (data !== undefined) {
+//     const parsedData = JSON.parse(data)
+//     return parsedData.sources[0].src
+//   }
+// }
 
 async function getInfo (url: string): Promise<EpisodeInfo> {
   const titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > ' +

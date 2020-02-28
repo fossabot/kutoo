@@ -3,9 +3,9 @@ import cheerio from 'cheerio'
 // import { resolve as resolvePath } from 'path'
 import got from 'got'
 
-import { createFileName, downloadFile } from '../../../utils'
+import { createFileName, downloadFile } from '../../utils'
 
-import { downloadOptionsDefined, EpisodeInfo } from '../../../types'
+import { downloadOptionsDefined, EpisodeInfo } from '../../types'
 
 // async function getSeasons(url: string) {
 //     let titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > ' +

@@ -1,9 +1,9 @@
 import cheerio from 'cheerio'
 import got from 'got'
 import { CookieJar } from 'tough-cookie'
-import { Config } from './config'
+import { Config } from './crunchyroll_config'
 
-import * as utils from '../../../utils'
+import * as utils from '../../utils'
 
 export async function setLanguageCookie (lang: string): Promise<CookieJar> {
   const cookieJar = new CookieJar()

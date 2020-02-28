@@ -5,11 +5,11 @@ import { Parser } from 'm3u8-parser'
 
 import { resolve as resolvePath } from 'path'
 
-import { getConfig } from './helper'
-import { downloadManifest, createFileName } from '../../../utils'
-import { Config } from './config'
+import { getConfig } from './crunchyroll_helper'
+import { downloadManifest, createFileName } from '../../utils'
+import { Config } from './crunchyroll_config'
 
-import { EpisodeInfo, downloadOptionsDefined } from '../../../types'
+import { EpisodeInfo, downloadOptionsDefined } from '../../types'
 
 async function getInfo (url: string): Promise<EpisodeInfo> {
   const config: Config = await getConfig(url)

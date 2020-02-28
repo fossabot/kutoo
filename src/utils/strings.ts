@@ -2,7 +2,7 @@ import { URL } from 'url'
 
 export function getStringBewtween (str: string, start: string, end: string, shift?: number): string {
   shift = shift ?? 0
-  const data = str.slice(str.indexOf(start) + start.length, str.length - 1)
+  const data = str.slice(str.indexOf(start) + start.length, str.length)
   return data.substring(0, data.indexOf(end) + shift)
 }
 
