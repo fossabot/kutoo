@@ -2,9 +2,13 @@ name: ci
 
 on:
   push:
-    # tags:
-    #   - 'v*'
+    branches:
+      - master
+      - greenkeeper/*
   pull_request:
+      branches:
+      - master
+      - greenkeeper/*
 
 jobs:
   build:
