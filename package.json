@@ -53,7 +53,7 @@
     "start:cli": "ts-node src/cli.ts",
     "start:example": "ts-node --files src/examples/index.ts",
     "prepare": "yarn build",
-    "release": "np --no-yarn",
+    "release": "np",
     "build": "yarn clean && webpack",
     "package:all": "yarn package:linux && yarn package:win && yarn package:macos",
     "package:linux": "pkg --targets node12-linux --output release/animekit-linux release/cli.bundle.js",
