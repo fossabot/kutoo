@@ -47,7 +47,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
-    "clean": "del-cli dist release",
+    "clean": "del-cli dist release coverage",
     "lint": "eslint --ext .js,.ts . --fix",
     "test": "yarn lint && tsc --noEmit && jest",
     "start:cli": "ts-node src/cli.ts",

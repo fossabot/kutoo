@@ -35,11 +35,12 @@ async function getInfo (url: string): Promise<any> {
     // await extractors.mangaExtractors[extractor].getInfo(url)
   }
 }
-// Default export for typescript
 
-const got = { download, getInfo }
-export default got
+const animekit = { download, getInfo }
+
+// Default export for typescript
+export default animekit
 
 // Exports for commonjs
-module.exports = got
-module.exports.default = got
+module.exports = animekit
+module.exports.default = animekit
