@@ -39,7 +39,7 @@ const argv = yargs
       alias: 'p',
       description: 'File pattern for downloaded files',
       type: 'string',
-      default: '<title>_Ep_<number>.<ext>'
+      default: '<title>/<title>_Ep_<number>.<ext>'
     }
   })
   .demandCommand(1)
