@@ -4,7 +4,10 @@ import { downloadOptions } from './types'
 
 const defaults: downloadOptions = {
   content: 0,
-  filePattern: '<title>_ep_<number>_<name>.<ext>'
+  filePattern: '<title>_ep_<number>_<name>.<ext>',
+  subtitles: 'embed',
+  subtitlesLang: 'all',
+  resolution: 'fhd'
 }
 
 async function download (url: string, path: string, options?: downloadOptions): Promise<void> {
