@@ -7,5 +7,5 @@ module.exports = {
         'node': true,
         'jest': true
     },
-    ignorePatterns: [ 'node_modules/',, 'temp/', 'dist/', 'release/']
+    ignorePatterns: [ 'node_modules/', 'temp/', 'test/', 'dist/', 'release/']
 }
