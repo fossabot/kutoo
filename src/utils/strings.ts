@@ -16,7 +16,7 @@ export function isUrl (url: string): boolean {
 };
 
 export function nthIndex (str: string, pat: string, n: number): number {
-  var L = str.length; var i = -1
+  const L = str.length; let i = -1
   // eslint-disable-next-line
   while (n-- && i++ < L) {
     i = str.indexOf(pat, i)
