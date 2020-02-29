@@ -85,7 +85,7 @@ This will return an EpisodeInfo object that looks like the following
 ## Supported manga sites
 * [Manganelo](https://manganelo.com/)
 * [Mangareader](http://www.mangareader.net/)
-* [Mangareader](http://www.mangareader.net/)
+* [Nhentai](http://nhentai.net/)
 
 ## Todo
 
