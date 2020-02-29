@@ -24,6 +24,10 @@ const libraryConfig = {
     libraryTarget: 'commonjs2',
     path: path.resolve(__dirname, 'dist')
   },
+  stats: {
+    // Ignore dynamic module loading warnings
+    warningsFilter: [/node_modules\/got/, /node_modules\/fluent-ffmpeg/]
+  },
   target: 'node'
 
 }
@@ -56,8 +60,8 @@ const cliConfig = {
     filename: 'cli.js'
   },
   stats: {
-    // Ignore warnings due to yarg's dynamic module loading
-    warningsFilter: [/node_modules\/yargs/]
+    // Ignore dynamic module loading warnings
+    warningsFilter: [/node_modules\/yargs/, /node_modules\/got/, /node_modules\/fluent-ffmpeg/]
   },
   target: 'node'
 }
@@ -84,8 +88,8 @@ const cliBundle = {
     filename: 'cli.bundle.js'
   },
   stats: {
-    // Ignore warnings due to yarg's dynamic module loading
-    warningsFilter: [/node_modules\/yargs/]
+    // Ignore dynamic module loading warnings
+    warningsFilter: [/node_modules\/yargs/, /node_modules\/got/, /node_modules\/fluent-ffmpeg/]
   },
   target: 'node'
 }
