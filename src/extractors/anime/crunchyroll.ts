@@ -9,7 +9,7 @@ import { getConfig } from './crunchyroll_helper'
 import { downloadManifest, createFileName } from '../../utils'
 import { Config } from './crunchyroll_config'
 
-import { EpisodeInfo, downloadOptionsDefined } from '../../types'
+import { EpisodeInfo, downloadOptions } from '../../types'
 
 async function getInfo (url: string): Promise<EpisodeInfo> {
   const config: Config = await getConfig(url)
@@ -40,7 +40,7 @@ async function getInfo (url: string): Promise<EpisodeInfo> {
   return info
 }
 
-async function download (url: string, path: string, options: downloadOptionsDefined): Promise<void> {
+async function download (url: string, path: string, options: downloadOptions): Promise<void> {
   const info = await getInfo(url)
   let videoWidth: number
   let videoHeight: number

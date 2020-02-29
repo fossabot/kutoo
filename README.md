@@ -48,31 +48,33 @@ Using animekit is very simple, just call the download function with a url and a 
 ```javascript
 const animekit = require('animekit')
 
-let url = 'https://www.crunchyroll.com/darling-in-the-franxx/episode-24-never-let-me-go-769621'
+const url = 'https://www.crunchyroll.com/darling-in-the-franxx/episode-24-never-let-me-go-769621'
 animekit.download(url, './videos')
 ```
 
 To get the information about an episode you can use the info method
 
 ```javascript
-let url = 'https://www.crunchyroll.com/darling-in-the-franxx/episode-24-never-let-me-go-769621'
-let info = await animekit.getInfo(url)
+const url = 'https://www.crunchyroll.com/darling-in-the-franxx/episode-24-never-let-me-go-769621'
+const info = await animekit.getInfo(url)
 ```
 
-This will return the following object 
+This will return an EpisodeInfo object that looks like the following
 
 ```javascript
 {
-    //A url to the episode
-    url: 'https://www.example.com/episode-1',
-    // url to the video/playlist file
-    directUrl: 'https://www.example.com/episode-1/video.mp4',
-    //Links to sub files
-    captions:{
-        enUS: 'https://www.example.com/episode-1/sub/enUS.ass',
-        itIT: 'https://www.example.com/episode-1/sub/itIT.ass'
-    }
+  url: 'https://www.legitstreaming.com/anime/bokunopico',
+  directUrl: 'https://files.legitstreaming.com/animes/bokunopico/3.mp4',
+  resolution: ['fhd', 'hd'],
+  title: 'Boku no Pico',
+  name: 'Boku no Pico Episode 3',
+  number: 3,
+  ext: 'mp4',
+  subtitles: {
+    type: 'burned'
+  }
 }
+
 ```
 
 ## Supported anime sites
@@ -82,6 +84,7 @@ This will return the following object
 
 ## Supported manga sites
 * [Manganelo](https://manganelo.com/)
+* [Mangareader](http://www.mangareader.net/)
 * [Mangareader](http://www.mangareader.net/)
 
 ## Todo

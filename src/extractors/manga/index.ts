@@ -1,3 +1,3 @@
-// import manganelo from './manganelo'
+import nhentai from './nhentai'
 
-// export default { manganelo }
+export default { nhentai }

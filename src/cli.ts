@@ -67,6 +67,8 @@ async function doDownload (url: string, argv: any): Promise<void> {
   await animekit.download(url, argv.out, {
     filePattern: argv.pattern,
     resolution: argv.resolution,
-    content: argv.content
+    content: argv.content,
+    subtitles: 'burned',
+    subtitlesLang: 'en'
   })
 }

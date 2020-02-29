@@ -56,3 +56,5 @@
 //     await downloadFile(src, `./temp/${sauce}`)
 //   }
 // })()
+
+export default {}

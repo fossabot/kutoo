@@ -5,7 +5,7 @@ import got from 'got'
 
 import { createFileName, downloadFile } from '../../utils'
 
-import { downloadOptionsDefined, EpisodeInfo } from '../../types'
+import { downloadOptions, EpisodeInfo } from '../../types'
 
 async function getSeasonLinks (url: string): Promise<string[]> {
   const response = await got(url)
@@ -51,7 +51,10 @@ async function getInfo (url: string): Promise<EpisodeInfo> {
   return info
 }
 
-async function download (url: string, path: string, options: downloadOptionsDefined): Promise<void> {
+async function download (url: string, path: string, options: downloadOptions): Promise<void> {
+  if (options.filePattern === undefined) {
+    throw new Error()
+  }
   if (options.content === 0 || options.content === 'episode') {
     const info = await getInfo(url)
     const fileName = createFileName(info, options.filePattern)

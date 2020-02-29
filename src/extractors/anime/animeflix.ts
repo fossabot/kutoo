@@ -3,7 +3,7 @@ import cheerio from 'cheerio'
 // import { getDirectLink } from './helper'
 
 import { createFileName, downloadFile } from '../../utils'
-import { EpisodeInfo, downloadOptionsDefined } from '../../types'
+import { EpisodeInfo, downloadOptions } from '../../types'
 
 // async function getDirectLink (url: string): Promise<any> {
 //   const response = await got(url)
@@ -43,7 +43,10 @@ async function getInfo (url: string): Promise<EpisodeInfo> {
 
   return info
 }
-async function download (url: string, path: string, options: downloadOptionsDefined): Promise<void> {
+async function download (url: string, path: string, options: downloadOptions): Promise<void> {
+  if (options.filePattern === undefined) {
+    throw new Error()
+  }
   const info = await getInfo(url)
   const fileName = createFileName(info, options.filePattern)
   await downloadFile(info.directUrl, path, fileName)
