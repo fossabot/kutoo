@@ -1,8 +1,8 @@
 import extractors from './extractors'
 
-import { downloadOptions } from './types'
+import { DownloadOptions } from './types'
 
-const defaults: downloadOptions = {
+const defaults: DownloadOptions = {
   content: 0,
   filePattern: '<title>_ep_<number>_<name>.<ext>',
   subtitles: 'embed',
@@ -10,7 +10,7 @@ const defaults: downloadOptions = {
   resolution: 'fhd'
 }
 
-async function download (url: string, path: string, options?: downloadOptions): Promise<void> {
+async function download (url: string, path: string, options?: DownloadOptions): Promise<void> {
   const opts = Object.assign(defaults, options)
   const extractorInfo = extractors.getExtractor(url)
   if (extractorInfo === null) {

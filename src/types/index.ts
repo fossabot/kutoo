@@ -1,15 +1,15 @@
 export * from './options'
-export * from './episode'
+export * from './anime'
 export * from './extractor'
 
-export interface page {
+export interface Page {
   url: string
   directUrl: string
   pages: number
 }
 export interface ChapterInfo {
   url: string
-  pages: page[]
+  pages: Page[]
 }
 
 export interface Chapter {

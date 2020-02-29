@@ -15,3 +15,7 @@ export interface EpisodeInfo {
     [key: string]: string
   }
 }
+
+export interface SeasonInfo {
+  url: string
+}

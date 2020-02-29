@@ -1,11 +1,11 @@
-import { downloadOptions } from './options'
-import { EpisodeInfo } from './episode'
+import { DownloadOptions } from './options'
+import { EpisodeInfo } from './anime'
 
-export interface extractor {
-  download: (url: string, path: string, options: downloadOptions) => Promise<void>
+export interface Extractor {
+  download: (url: string, path: string, options: DownloadOptions) => Promise<void>
   getInfo: (url: string) => Promise<EpisodeInfo>
 }
 
-export interface extractorArray {
-  [key: string]: extractor
+export interface ExtractorsArray {
+  [key: string]: Extractor
 }
