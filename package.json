@@ -15,7 +15,7 @@
     "yargs": "^15.1.0"
   },
   "optionalDependencies": {
-    "fluent-ffmpeg": "git://github.com/schaermu/node-fluent-ffmpeg.git",
+    "fluent-ffmpeg": "git://github.com/schaermu/node-fluent-ffmpeg.git"
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.16",
