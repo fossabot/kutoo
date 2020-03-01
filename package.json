@@ -7,13 +7,15 @@
   "bin": "./dist/cli.js",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
-    "fluent-ffmpeg": "git://github.com/schaermu/node-fluent-ffmpeg.git",
     "got": "^10.6.0",
     "m3u8-parser": "^4.4.0",
     "m3u8stream": "^0.6.5",
     "sanitize-filename": "^1.6.3",
     "tough-cookie": "^3.0.1",
     "yargs": "^15.1.0"
+  },
+  "optionalDependencies": {
+    "fluent-ffmpeg": "git://github.com/schaermu/node-fluent-ffmpeg.git",
   },
   "devDependencies": {
     "@types/cheerio": "^0.22.16",
