@@ -4,7 +4,7 @@ import animekit from './index'
 import { resolution, contentType } from './types'
 
 const resolutionChoices: readonly resolution[] = ['uhd', 'fhd', 'hd', 'sd', 'low', 'ulow']
-const contentChoices: readonly contentType[] = [0, 1, 'episode', 'season', 'page', 'chapter', 'volume']
+const contentChoices: readonly contentType[] = ['episode', 'season', 'page', 'chapter', 'volume']
 
 const argv = yargs
   .scriptName('animekit')

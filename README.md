@@ -83,8 +83,7 @@ This will return an EpisodeInfo object that looks like the following
 * [Crunchyroll](https://www.crunchyroll.com/)
 
 ## Supported manga sites
-* [Manganelo](https://manganelo.com/)
-* [Mangareader](http://www.mangareader.net/)
+* [Mangadex](https://mangadex.org/)
 * [Nhentai](http://nhentai.net/)
 
 ## Todo

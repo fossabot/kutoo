@@ -2,18 +2,18 @@ import animeExtractors from './anime'
 import mangaExtractors from './manga'
 
 import { getDomain } from '../utils'
-import { sites } from './sites'
-import { AnimeExtractor, MangaExtractor } from '../types'
+import { animeSites, mangaSites } from './sites'
+import { AnimeExtractor, MangaExtractor, contentType } from '../types'
 
-export function selectExtractor (url: string): AnimeExtractor | MangaExtractor | null {
-  const extractorInfo = sites[getDomain(url)]
-  if (extractorInfo === undefined) {
-    return null
-  }
-  if (extractorInfo.type === 'anime') {
-    return animeExtractors[extractorInfo.extractor]
-  } else if (extractorInfo.type === 'manga') {
-    return mangaExtractors[extractorInfo.extractor]
+export function selectExtractor (url: string, content: 'episode' | 'season'): AnimeExtractor
+export function selectExtractor (url: string, content: 'page' | 'chapter' | 'volume'): MangaExtractor
+export function selectExtractor (url: string, content: contentType): any {
+  if (content === 'episode' || content === 'season') {
+    const extractorName = animeSites[getDomain(url)]
+    return animeExtractors[extractorName]
+  } else if (content === 'page' || content === 'chapter' || content === 'volume') {
+    const extractorName = mangaSites[getDomain(url)]
+    return mangaExtractors[extractorName]
   } else {
     return null
   }

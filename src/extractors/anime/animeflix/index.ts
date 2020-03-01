@@ -3,7 +3,7 @@ import cheerio from 'cheerio'
 // import { getDirectLink } from './helper'
 
 import { createFileName, downloadFile } from '../../../utils'
-import { EpisodeInfo, DownloadOptions } from '../../../types'
+import { EpisodeInfo, DownloadOptionsDefined } from '../../../types'
 
 // async function getDirectLink (url: string): Promise<any> {
 //   const response = await got(url)
@@ -24,13 +24,21 @@ async function getInfo (url: string): Promise<EpisodeInfo> {
   const response = await got(url)
   const $ = cheerio.load(response.body)
 
-  const directUrl = $('#video-player > source').attr('src') ?? ''
+  // const directUrl = $('#video-player > source').attr('src') ?? ''
   const episodeNumber = parseFloat($('a.btn-purple').text())
   const title = $(titleSelector).html() ?? ''
 
   const info: EpisodeInfo = {
     url: url,
-    directUrl: directUrl,
+    directUrlType: 'video',
+    directUrls: {
+      uhd: '',
+      fhd: '',
+      hd: '',
+      sd: '',
+      low: '',
+      ulow: ''
+    },
     resolution: ['hd'],
     title: title,
     name: title,
@@ -43,13 +51,13 @@ async function getInfo (url: string): Promise<EpisodeInfo> {
 
   return info
 }
-async function download (url: string, path: string, options: DownloadOptions): Promise<void> {
+async function download (url: string, path: string, options: DownloadOptionsDefined): Promise<void> {
   if (options.filePattern === undefined) {
     throw new Error()
   }
   const info = await getInfo(url)
   const fileName = createFileName(info, options.filePattern)
-  await downloadFile(info.directUrl, path, fileName)
+  await downloadFile(info.directUrls[options.resolution], path, fileName)
 }
 
 export default { download, getInfo }

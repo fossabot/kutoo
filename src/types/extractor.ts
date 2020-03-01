@@ -1,20 +1,21 @@
-import { DownloadOptionsDefined, contentType } from './options'
+import { DownloadOptionsDefined } from './options'
 import { EpisodeInfo, SeasonInfo } from './anime'
 import { PageInfo, ChapterInfo, VolumeInfo } from './manga'
 
-export type extractorType = 'anime' | 'manga'
-
 export interface AnimeExtractor {
-  download: (url: string, path: string, options: DownloadOptionsDefined) => Promise<void>
-  getInfo(url: string, content: contentType): Promise<EpisodeInfo>
-  getInfo(url: string, content: contentType): Promise<SeasonInfo>
+  createEpisodeInfo (url: string): Promise<EpisodeInfo>
+  createSeasonInfo (url: string): Promise<SeasonInfo>
+  downloadEpisode (url: string, path: string, options: DownloadOptionsDefined): Promise<void>
+  downloadSeason (url: string, path: string, options: DownloadOptionsDefined): Promise<void>
 }
 
 export interface MangaExtractor {
-  download: (url: string, path: string, options: DownloadOptionsDefined) => Promise<void>
-  getInfo(url: string, content: contentType): Promise<PageInfo>
-  getInfo(url: string, content: contentType): Promise<ChapterInfo>
-  getInfo(url: string, content: contentType): Promise<VolumeInfo>
+  createPageInfo (url: string): Promise<PageInfo>
+  createChapterInfo (url: string): Promise<ChapterInfo>
+  createVolumeinfo (url: string): Promise<VolumeInfo>
+  downloadPage (url: string, path: string, options: DownloadOptionsDefined): Promise<void>
+  downloadChapter (url: string, path: string, options: DownloadOptionsDefined): Promise<void>
+  downloadVolume (url: string, path: string, options: DownloadOptionsDefined): Promise<void>
 }
 
 export interface ExtractorsArray {

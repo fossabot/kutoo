@@ -1,7 +1,7 @@
 import { DownloadOptionsDefined } from './types'
 
 export const defaults: DownloadOptionsDefined = {
-  content: 0,
+  content: 'episode',
   filePattern: '<title>_ep_<number>_<name>.<ext>',
   subtitles: 'embed',
   subtitlesLang: 'all',

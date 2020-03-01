@@ -1,12 +1,14 @@
 import { resolution, subtitlesType } from './options'
 
 export type seasonStatus = 'airing' | 'completed' | 'cancelled' | 'not aired' | 'unknown'
-
 export type exts = 'mp4' | 'mkv'
 
 export interface EpisodeInfo {
   url: string
-  directUrl: string
+  directUrlType: 'manifest' | 'video'
+  directUrls: {
+    [key in resolution]: string
+  }
   resolution: resolution[]
   title: string
   duration?: number

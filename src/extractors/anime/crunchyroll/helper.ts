@@ -41,7 +41,15 @@ export async function createEpisodeInfo (url: string): Promise<EpisodeInfo> {
 
   const info: EpisodeInfo = {
     url: url,
-    directUrl: '',
+    directUrlType: 'manifest',
+    directUrls: {
+      uhd: '',
+      fhd: '',
+      hd: '',
+      sd: '',
+      low: '',
+      ulow: ''
+    },
     resolution: ['fhd'],
     name: config.metadata.title,
     title: config.metadata.title,
@@ -52,11 +60,11 @@ export async function createEpisodeInfo (url: string): Promise<EpisodeInfo> {
     }
   }
 
-  config.streams.forEach((stream) => {
-    if (stream.format === 'multitrack_adaptive_hls_v2' && stream.hardsub_lang == null) {
-      info.directUrl = stream.url
-    }
-  })
+  // config.streams.forEach((stream) => {
+  //   if (stream.format === 'multitrack_adaptive_hls_v2' && stream.hardsub_lang == null) {
+  //     info.directUrl = stream.url
+  //   }
+  // })
 
   config.subtitles.forEach((sub) => {
     info.subtitles[sub.language] = sub.url

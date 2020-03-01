@@ -56,6 +56,7 @@
     "start:cli": "ts-node src/cli.ts",
     "start:example": "ts-node --files src/examples/index.ts",
     "prepare": "yarn build",
+    "postpublish": "yarn package:all",
     "release": "np",
     "build": "yarn clean && webpack",
     "package:all": "yarn package:linux && yarn package:win && yarn package:macos",
@@ -77,6 +78,15 @@
       "**/test/**"
     ]
   },
+  "keywords": [
+    "anime",
+    "crunchyroll",
+    "download",
+    "manga",
+    "mangadex",
+    "nhentai",
+    "scraping"
+  ],
   "repository": "https://github.com/FedericoMorrone/animekit.git",
   "author": "Federico Morrone <flickmor@gmail.com>"
 }

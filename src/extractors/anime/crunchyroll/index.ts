@@ -10,20 +10,20 @@ import { downloadManifest, createFileName } from '../../../utils'
 
 import { EpisodeInfo, SeasonInfo, contentType, DownloadOptionsDefined } from '../../../types'
 
-async function getInfo (url: string, content: 0 | 'episode'): Promise<EpisodeInfo>
-async function getInfo (url: string, content: 1 | 'season'): Promise<SeasonInfo>
+async function getInfo (url: string, content: 'episode'): Promise<EpisodeInfo>
+async function getInfo (url: string, content: 'season'): Promise<SeasonInfo>
 async function getInfo (url: string, content: contentType): Promise<any> {
-  if (content === 0 || content === 'episode') {
+  if (content === 'episode') {
     return createEpisodeInfo(url)
-  } else if (content === 1 || content === 'season') {
+  } else if (content === 'season') {
     return createSeasonInfo(url)
   } else {
     throw new Error()
   }
 }
 
-async function download (url: string, path: string, options: DownloadOptionsDefined): Promise<void> {
-  const info = await getInfo(url, 0)
+async function downloadEpisode (url: string, path: string, options: DownloadOptionsDefined): Promise<void> {
+  const info = await getInfo(url, 'episode')
   let videoWidth: number
   let videoHeight: number
 
@@ -53,7 +53,7 @@ async function download (url: string, path: string, options: DownloadOptionsDefi
   }
 
   const parser = new Parser()
-  const response = await got(info.directUrl)
+  const response = await got(info.directUrls[options.resolution])
   const streamUrl = response.body
   parser.push(streamUrl)
   parser.end()
@@ -64,6 +64,21 @@ async function download (url: string, path: string, options: DownloadOptionsDefi
   })
   const fileName = createFileName(info, options.filePattern)
   downloadManifest(link.uri, resolvePath(path, fileName), true)
+}
+
+async function download (url: string, path: string, options: DownloadOptionsDefined): Promise<void> {
+  switch (options.content) {
+    case 'episode':
+      await downloadEpisode(url, path, options)
+      break
+    case 'season':
+      for (const episode of (await createSeasonInfo(url)).episodes) {
+        await downloadEpisode((await episode).url, path, options)
+      }
+      break
+    default:
+      throw new Error()
+  }
 }
 
 // async function getSeasons(url: string) {
