@@ -1,8 +1,8 @@
 // import got from 'got'
 // import cheerio from 'cheerio'
-// import sanitize from 'sanitize-filename'
 
-// import { downloadFile } from '../../../utils'
+// import { downloadFile, createFileName } from '../../utils'
+// import { DownloadOptions, PageInfo, ChapterInfo, VolumeInfo } from '../../types'
 // // import fs from 'fs'
 
 // async function getPages (url: string) {
@@ -44,17 +44,34 @@
 //   return img
 // }
 
-// (async () => {
-//   const url = 'https://nhentai.net/g/263576'
-//   const links = await getLinks(url)
+// // (async () => {
+// //   const url = 'https://nhentai.net/g/263576'
+// //   const links = await getLinks(url)
 
-//   const title = sanitize(links.title)
-//   const sauce = links.sauce
+// //   const title = sanitize(links.title)
+// //   const sauce = links.sauce
 
-//   for (const lnk of links.links) {
-//     const src = await getDirect(lnk)
-//     await downloadFile(src, `./temp/${sauce}`)
+// //   for (const lnk of links.links) {
+// //     const src = await getDirect(lnk)
+// //     await downloadFile(src, `./temp/${sauce}`)
+// //   }
+// // })()
+// async function getInfo (url: string): Promise<PageInfo | ChapterInfo | VolumeInfo> {
+// }
+
+// async function download (url: string, path: string, options: DownloadOptions): Promise<void> {
+//   switch (options.content) {
+//     case 0: case 'page':
+//       break
+//     case 1: case 'season':
+//       break
+//     case 'volume':
+//       break
+//     default:
+//       throw new Error()
 //   }
-// })()
+// }
+
+// export default { download, getInfo }
 
 export default {}

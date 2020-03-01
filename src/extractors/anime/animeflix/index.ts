@@ -2,8 +2,8 @@ import got from 'got'
 import cheerio from 'cheerio'
 // import { getDirectLink } from './helper'
 
-import { createFileName, downloadFile } from '../../utils'
-import { EpisodeInfo, DownloadOptions } from '../../types'
+import { createFileName, downloadFile } from '../../../utils'
+import { EpisodeInfo, DownloadOptions } from '../../../types'
 
 // async function getDirectLink (url: string): Promise<any> {
 //   const response = await got(url)

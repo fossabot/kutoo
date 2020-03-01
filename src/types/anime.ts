@@ -1,12 +1,15 @@
 import { resolution, subtitlesType } from './options'
 
-export type exts = 'mp4'| 'mkv'
+export type seasonStatus = 'airing' | 'completed' | 'cancelled' | 'not aired' | 'unknown'
+
+export type exts = 'mp4' | 'mkv'
 
 export interface EpisodeInfo {
   url: string
   directUrl: string
   resolution: resolution[]
   title: string
+  duration?: number
   name: string
   number: number
   ext: exts
@@ -18,4 +21,10 @@ export interface EpisodeInfo {
 
 export interface SeasonInfo {
   url: string
+  name: string
+  year?: number
+  studio?: string
+  status: seasonStatus
+  episodesCount: number
+  episodes: Array<Promise<EpisodeInfo>>
 }

@@ -1,41 +1,28 @@
-import extractors from './extractors'
+import { DownloadOptions, contentType, EpisodeInfo, SeasonInfo } from './types'
 
-import { DownloadOptions } from './types'
+import { selectExtractor } from './extractors'
 
-const defaults: DownloadOptions = {
-  content: 0,
-  filePattern: '<title>_ep_<number>_<name>.<ext>',
-  subtitles: 'embed',
-  subtitlesLang: 'all',
-  resolution: 'fhd'
-}
+import { defaults } from './defaults'
 
 async function download (url: string, path: string, options?: DownloadOptions): Promise<void> {
   const opts = Object.assign(defaults, options)
-  const extractorInfo = extractors.getExtractor(url)
-  if (extractorInfo === null) {
-    throw new Error(`No extractor found for ${url}`)
-  }
-  const extractorType = extractorInfo[0]
-  const extractor = extractorInfo[1]
-  if (extractorType === 'anime') {
-    await extractors.animeExtractors[extractor].download(url, path, opts)
-  } else if (extractorType === 'manga') {
-    // extractors.mangaExtractors[extractor].download(url, path)
+  const extractor = selectExtractor(url)
+  if (extractor !== null) {
+    await extractor.download(url, path, opts)
+  } else {
+    throw new Error()
   }
 }
 
-async function getInfo (url: string): Promise<any> {
-  const extractorInfo = extractors.getExtractor(url)
-  if (extractorInfo === null) {
-    throw new Error(`No extractor found for ${url}`)
-  }
-  const extractorType = extractorInfo[0]
-  const extractor = extractorInfo[1]
-  if (extractorType === 'anime') {
-    await extractors.animeExtractors[extractor].getInfo(url)
-  } else if (extractorType === 'manga') {
-    // await extractors.mangaExtractors[extractor].getInfo(url)
+async function getInfo (url: string, content?: 0 | 'episode'): Promise<EpisodeInfo>
+async function getInfo (url: string, content?: 1 | 'season'): Promise<SeasonInfo>
+async function getInfo (url: string, content?: contentType): Promise<any> {
+  content = content ?? defaults.content
+  const extractor = selectExtractor(url)
+  if (extractor !== null) {
+    return extractor.getInfo(url, content)
+  } else {
+    throw new Error()
   }
 }
 

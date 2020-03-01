@@ -5,43 +5,25 @@ import { Parser } from 'm3u8-parser'
 
 import { resolve as resolvePath } from 'path'
 
-import { getConfig } from './crunchyroll_helper'
-import { downloadManifest, createFileName } from '../../utils'
-import { Config } from './crunchyroll_config'
+import { createEpisodeInfo, createSeasonInfo } from './helper'
+import { downloadManifest, createFileName } from '../../../utils'
 
-import { EpisodeInfo, DownloadOptions } from '../../types'
+import { EpisodeInfo, SeasonInfo, contentType, DownloadOptionsDefined } from '../../../types'
 
-async function getInfo (url: string): Promise<EpisodeInfo> {
-  const config: Config = await getConfig(url)
-
-  const info: EpisodeInfo = {
-    url: url,
-    directUrl: '',
-    resolution: ['fhd'],
-    name: config.metadata.title,
-    title: config.metadata.title,
-    number: parseFloat(config.metadata.episode_number),
-    ext: 'mp4',
-    subtitles: {
-      type: 'external'
-    }
+async function getInfo (url: string, content: 0 | 'episode'): Promise<EpisodeInfo>
+async function getInfo (url: string, content: 1 | 'season'): Promise<SeasonInfo>
+async function getInfo (url: string, content: contentType): Promise<any> {
+  if (content === 0 || content === 'episode') {
+    return createEpisodeInfo(url)
+  } else if (content === 1 || content === 'season') {
+    return createSeasonInfo(url)
+  } else {
+    throw new Error()
   }
-
-  config.streams.forEach((stream) => {
-    if (stream.format === 'multitrack_adaptive_hls_v2' && stream.hardsub_lang == null) {
-      info.directUrl = stream.url
-    }
-  })
-
-  config.subtitles.forEach((sub) => {
-    info.subtitles[sub.language] = sub.url
-  })
-
-  return info
 }
 
-async function download (url: string, path: string, options: DownloadOptions): Promise<void> {
-  const info = await getInfo(url)
+async function download (url: string, path: string, options: DownloadOptionsDefined): Promise<void> {
+  const info = await getInfo(url, 0)
   let videoWidth: number
   let videoHeight: number
 

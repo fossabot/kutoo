@@ -1,3 +1,7 @@
-import nhentai from './nhentai'
+// import nhentai from './nhentai'
 
-export default { nhentai }
+import { ExtractorsArray } from '../../types'
+
+const extractors: ExtractorsArray = { }
+
+export default extractors
