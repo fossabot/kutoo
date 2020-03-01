@@ -12,7 +12,15 @@ import {EpisodeInfo} from '../../src/types'
 describe('createFileName', ()=>{
     const info: EpisodeInfo = {
         url: '',
-        directUrl:'',
+        directUrlType: 'video',
+        directUrls:{
+            uhd: '',
+            fhd:'',
+            hd:'',
+            sd:'',
+            low:'',
+            ulow:''
+        },
         resolution: ['fhd'],
         title: 'Amazing Anime',
         name: 'Best Episode',
