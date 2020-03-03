@@ -55,7 +55,7 @@ animekit.download(url, './videos')
 To get the information about an episode you can use the info method
 
 ```javascript
-const url = 'https://www.crunchyroll.com/darling-in-the-franxx/episode-24-never-let-me-go-769621'
+const url = 'https://www.legitstreaming.com/anime/bokunopico'
 const info = await animekit.getInfo(url)
 ```
 
