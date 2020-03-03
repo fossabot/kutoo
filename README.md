@@ -48,7 +48,7 @@ Using animekit is very simple, just call the download function with a url and a 
 ```javascript
 const animekit = require('animekit')
 
-const url = 'https://www.crunchyroll.com/darling-in-the-franxx/episode-24-never-let-me-go-769621'
+const url = 'https://www.legitstreaming.com/anime/bokunopico'
 animekit.download(url, './videos')
 ```
 
