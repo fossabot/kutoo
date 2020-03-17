@@ -12,7 +12,7 @@
     "m3u8stream": "^0.6.5",
     "sanitize-filename": "^1.6.3",
     "tough-cookie": "^3.0.1",
-    "yargs": "^15.1.0"
+    "yargs": "^15.3.0"
   },
   "optionalDependencies": {
     "fluent-ffmpeg": "git://github.com/schaermu/node-fluent-ffmpeg.git"
