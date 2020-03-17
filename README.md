@@ -5,7 +5,6 @@ __This project is still at a very early stage, expect breaking change with updat
 # Animekit
 ![build](https://github.com/FedericoMorrone/animekit/workflows/ci/badge.svg)
 [![npm version](https://badge.fury.io/js/animekit.svg)](https://badge.fury.io/js/animekit)
-[![Downloads](https://img.shields.io/npm/dm/animekit.svg)](https://npmjs.com/animekit)
 [![codecov](https://codecov.io/gh/FedericoMorrone/animekit/branch/master/graph/badge.svg)](https://codecov.io/gh/FedericoMorrone/animekit)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Known Vulnerabilities](https://snyk.io/test/github/FedericoMorrone/animekit/badge.svg?targetFile=package.json)](https://snyk.io/test/github/FedericoMorrone/animekit?targetFile=package.json)
