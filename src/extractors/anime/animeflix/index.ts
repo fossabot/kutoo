@@ -19,7 +19,7 @@ import { EpisodeInfo, DownloadOptionsDefined } from '../../../types'
 
 async function getInfo (url: string): Promise<EpisodeInfo> {
   const titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > ' +
-        'div.col-lg-4.col-sm-12.custom-padding-bottom > div > div.card-body.bg-light-gray > p:nth-child(2)'
+    'div.col-lg-4.col-sm-12.custom-padding-bottom > div > div.card-body.bg-light-gray > p:nth-child(2)'
 
   const response = await got(url)
   const $ = cheerio.load(response.body)
