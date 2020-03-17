@@ -29,7 +29,6 @@
     "@typescript-eslint/eslint-plugin": "2",
     "@typescript-eslint/parser": "^2.21.0",
     "app-builder-bin": "^3.5.2",
-    "coveralls": "^3.0.9",
     "del-cli": "^3.0.0",
     "eslint": "6",
     "eslint-config-standard-with-typescript": "^14.0.0",
@@ -70,13 +69,9 @@
     "dist/",
     "LICENSE"
   ],
-  "nyc": {
-    "extension": [
-      ".ts"
-    ],
-    "exclude": [
-      "**/test/**"
-    ]
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   },
   "keywords": [
     "anime",
