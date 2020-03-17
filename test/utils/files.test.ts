@@ -1,4 +1,4 @@
-import { createFileName } from '../../src/utils/files'
+import { createEpisodeFileName } from '../../src/utils/files'
 import {EpisodeInfo} from '../../src/types'
 
 // import nock from 'nock'
@@ -21,6 +21,7 @@ describe('createFileName', ()=>{
             low:'',
             ulow:''
         },
+        duration: 0,
         resolution: ['fhd'],
         title: 'Amazing Anime',
         name: 'Best Episode',
@@ -32,10 +33,10 @@ describe('createFileName', ()=>{
     }
     const pattern = '<title>_ep_<number>_<name>.<ext>'
     it('returns a filename from a given pattern', ()=>{
-        expect(createFileName(info, pattern)).toBe('AmazingAnime_ep_1_BestEpisode.mp4')
+        expect(createEpisodeFileName(info, pattern)).toBe('AmazingAnime_ep_1_BestEpisode.mp4')
     })
 
     it('returns a filename from a given pattern lowercase', ()=>{
-        expect(createFileName(info, pattern, true)).toBe('amazinganime_ep_1_bestepisode.mp4')
+        expect(createEpisodeFileName(info, pattern, true)).toBe('amazinganime_ep_1_bestepisode.mp4')
     })
 })

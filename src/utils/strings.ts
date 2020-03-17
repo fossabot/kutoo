@@ -9,7 +9,7 @@ export function getStringBewtween (str: string, start: string, end: string, shif
 export function isUrl (url: string): boolean {
   try {
     const parsed = new URL(url)
-    return parsed !== undefined
+    return typeof parsed !== 'undefined'
   } catch (error) {
     return false
   }

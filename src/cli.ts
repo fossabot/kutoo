@@ -21,7 +21,7 @@ const argv = yargs
       alias: 'c',
       description: 'What type of content you\'re trying to download',
       choices: contentChoices,
-      default: 0
+      default: 'episode'
     },
     out: {
       alias: 'o',
@@ -64,6 +64,7 @@ for (const url of urls) {
 }
 
 async function doDownload (url: string, argv: any): Promise<void> {
+  console.log('download')
   await animekit.download(url, argv.out, {
     filePattern: argv.pattern,
     resolution: argv.resolution,

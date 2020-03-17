@@ -6,7 +6,7 @@ import { Parser } from 'm3u8-parser'
 import { resolve as resolvePath } from 'path'
 
 import { createEpisodeInfo, createSeasonInfo } from './helper'
-import { downloadManifest, createFileName } from '../../../utils'
+import { downloadManifest, createEpisodeFileName } from '../../../utils'
 
 import { EpisodeInfo, SeasonInfo, contentType, DownloadOptionsDefined } from '../../../types'
 
@@ -62,7 +62,7 @@ async function downloadEpisode (url: string, path: string, options: DownloadOpti
     return playlist.attributes.RESOLUTION.height === videoHeight &&
             playlist.attributes.RESOLUTION.width === videoWidth
   })
-  const fileName = createFileName(info, options.filePattern)
+  const fileName = createEpisodeFileName(info, options.filePattern)
   downloadManifest(link.uri, resolvePath(path, fileName), true)
 }
 

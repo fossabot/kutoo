@@ -42,6 +42,7 @@ export async function createEpisodeInfo (url: string): Promise<EpisodeInfo> {
   const info: EpisodeInfo = {
     url: url,
     directUrlType: 'manifest',
+    duration: 0,
     directUrls: {
       uhd: '',
       fhd: '',
@@ -95,6 +96,8 @@ export async function createSeasonInfo (url: string): Promise<SeasonInfo> {
 
   const info: SeasonInfo = {
     url: '',
+    year: 0,
+    studio: '',
     status: 'unknown',
     episodesCount: 0,
     name: title,

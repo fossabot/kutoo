@@ -11,7 +11,7 @@ export interface EpisodeInfo {
   }
   resolution: resolution[]
   title: string
-  duration?: number
+  duration: number
   name: string
   number: number
   ext: exts
@@ -24,8 +24,8 @@ export interface EpisodeInfo {
 export interface SeasonInfo {
   url: string
   name: string
-  year?: number
-  studio?: string
+  year: number
+  studio: string
   status: seasonStatus
   episodesCount: number
   episodes: Array<Promise<EpisodeInfo>>

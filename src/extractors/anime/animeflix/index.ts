@@ -2,7 +2,7 @@ import got from 'got'
 import cheerio from 'cheerio'
 // import { getDirectLink } from './helper'
 
-import { createFileName, downloadFile } from '../../../utils'
+import { createEpisodeFileName, downloadFile } from '../../../utils'
 import { EpisodeInfo, DownloadOptionsDefined } from '../../../types'
 
 // async function getDirectLink (url: string): Promise<any> {
@@ -31,6 +31,7 @@ async function getInfo (url: string): Promise<EpisodeInfo> {
   const info: EpisodeInfo = {
     url: url,
     directUrlType: 'video',
+    duration: 0,
     directUrls: {
       uhd: '',
       fhd: '',
@@ -56,7 +57,7 @@ async function download (url: string, path: string, options: DownloadOptionsDefi
     throw new Error()
   }
   const info = await getInfo(url)
-  const fileName = createFileName(info, options.filePattern)
+  const fileName = createEpisodeFileName(info, options.filePattern)
   await downloadFile(info.directUrls[options.resolution], path, fileName)
 }
 

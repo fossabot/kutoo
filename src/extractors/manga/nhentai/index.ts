@@ -1,77 +1,100 @@
-// import got from 'got'
-// import cheerio from 'cheerio'
+import got from 'got'
+import cheerio from 'cheerio'
 
-// import { downloadFile, createFileName } from '../../utils'
-// import { DownloadOptions, PageInfo, ChapterInfo, VolumeInfo } from '../../types'
-// // import fs from 'fs'
+import { MangaExtractor, DownloadOptionsDefined, PageInfo, ChapterInfo, VolumeInfo } from '../../../types'
+import { downloadFile, createPageFileName } from '../../../utils'
+// import fs from 'fs'
 
-// async function getPages (url: string) {
-//   const links = []
-//   const response = await got(url)
-//   const $ = cheerio.load(response.body)
+import * as pathModule from 'path'
 
-//   const pageNumber = $('#content > section.pagination > a.last').attr('href')!.replace('?page=', '')
-//   for (let i = 1; i <= parseInt(pageNumber); i++) {
-//     const link = `${url}?page=${i}`
-//     links.push(link)
-//   }
-//   return links
-// }
+async function createPageInfo (url: string): Promise<PageInfo> {
+  console.log(url, 'page info')
 
-// async function getLinks (url: string) {
-//   const response = await got(url)
-//   const $ = cheerio.load(response.body)
+  const response = await got(url)
+  const $ = cheerio.load(response.body)
 
-//   const title = $('#info > h1').text()
-//   const sauce = url.split('/').pop()
+  const img = $('#image-container > a > img').attr('src') ?? ''
 
-//   const pages: string[] = []
+  const info: PageInfo = {
+    url: url,
+    directUrl: img,
+    ext: 'jpg',
+    // eslint-disable-next-line
+    number: Math.random() * 100
+  }
 
-//   $('#thumbnail-container > div > a').each((i: number, e: CheerioElement) => {
-//     const page = 'https://nhentai.net' + $(e).attr('href')
-//     pages.push(page)
-//   })
+  return info
+}
+async function createChapterInfo (url: string): Promise<ChapterInfo> {
+  console.log(url, 'chapter info')
+  const response = await got(url)
+  const $ = cheerio.load(response.body)
 
-//   return { links: pages, title: title, sauce: sauce }
-// }
+  const title = $('#info > h1').text()
+  const links: string[] = []
 
-// async function getDirect (url: string) {
-//   const response = await got(url)
-//   const $ = cheerio.load(response.body)
+  $('#thumbnail-container > div > a').each((i: number, e: CheerioElement) => {
+    const lnk = `https://nhentai.net${$(e).attr('href') ?? ''}`
+    links.push(lnk)
+  })
+  const info: ChapterInfo = {
+    url: url,
+    title: title,
+    pagesCount: 0,
+    pages: links.map(async lnk => createPageInfo(lnk))
+  }
 
-//   const img = $('#image-container > a > img').attr('src')!
-//   console.log(img)
-//   return img
-// }
+  return info
+}
+async function createVolumeinfo (url: string): Promise<VolumeInfo> {
+  console.log(url)
 
-// // (async () => {
-// //   const url = 'https://nhentai.net/g/263576'
-// //   const links = await getLinks(url)
+  const response = await got(url)
+  const $ = cheerio.load(response.body)
 
-// //   const title = sanitize(links.title)
-// //   const sauce = links.sauce
+  const title = $('#info > h1').text()
+  const links: string[] = []
 
-// //   for (const lnk of links.links) {
-// //     const src = await getDirect(lnk)
-// //     await downloadFile(src, `./temp/${sauce}`)
-// //   }
-// // })()
-// async function getInfo (url: string): Promise<PageInfo | ChapterInfo | VolumeInfo> {
-// }
+  $('#thumbnail-container > div > a').each((i: number, e: CheerioElement) => {
+    const lnk = `https://nhentai.net${$(e).attr('href') ?? ''}`
+    links.push(lnk)
+  })
+  const info: VolumeInfo = {
+    url: url,
+    title: title,
+    author: '',
+    chaptersCount: 0,
+    chapters: links.map(async lnk => createChapterInfo(lnk))
+  }
 
-// async function download (url: string, path: string, options: DownloadOptions): Promise<void> {
-//   switch (options.content) {
-//     case 0: case 'page':
-//       break
-//     case 1: case 'season':
-//       break
-//     case 'volume':
-//       break
-//     default:
-//       throw new Error()
-//   }
-// }
+  return info
+}
+async function downloadPage (url: string, path: string, options: DownloadOptionsDefined): Promise<void> {
+  const info = await createPageInfo(url)
+  return downloadFile(info.directUrl, path, createPageFileName(info, options.filePattern))
+}
+async function downloadChapter (url: string, path: string, options: DownloadOptionsDefined): Promise<void> {
+  const info = await createChapterInfo(url)
+  for (const page of info.pages) {
+    const pageInfo = await page
+    await downloadPage(pageInfo.url, pathModule.join(path, info.title), options)
+  }
+}
+async function downloadVolume (url: string, path: string, options: DownloadOptionsDefined): Promise<void> {
+  const info = await createVolumeinfo(url)
+  for (const chap of info.chapters) {
+    const chapInfo = await chap
+    await downloadChapter(chapInfo.url, pathModule.join(path, info.title), options)
+  }
+}
 
-// export default { download, getInfo }
+const nhentai: MangaExtractor = {
+  createPageInfo,
+  createChapterInfo,
+  createVolumeinfo,
+  downloadPage,
+  downloadChapter,
+  downloadVolume
+}
 
-export default {}
+export default nhentai

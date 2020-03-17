@@ -2,7 +2,7 @@ import cheerio from 'cheerio'
 import got from 'got'
 
 import { DownloadOptionsDefined, EpisodeInfo, SeasonInfo, AnimeExtractor } from '../../../types'
-import { downloadFile, createFileName } from '../../../utils'
+import { downloadFile, createEpisodeFileName } from '../../../utils'
 
 export async function createEpisodeInfo (url: string): Promise<EpisodeInfo> {
   const response = await got(url)
@@ -27,6 +27,7 @@ export async function createEpisodeInfo (url: string): Promise<EpisodeInfo> {
       low: directUrl,
       ulow: directUrl
     },
+    duration: 0,
     resolution: ['hd'],
     title: title,
     name: title,
@@ -62,6 +63,8 @@ export async function createSeasonInfo (url: string): Promise<SeasonInfo> {
   const info: SeasonInfo = {
     url: links[0],
     status: 'unknown',
+    year: 0,
+    studio: '',
     episodesCount: links.length,
     name: title,
     episodes: links.map(async lnk => createEpisodeInfo(lnk))
@@ -72,7 +75,7 @@ export async function createSeasonInfo (url: string): Promise<SeasonInfo> {
 
 async function downloadEpisode (url: string, path: string, options: DownloadOptionsDefined): Promise<void> {
   const info = await createEpisodeInfo(url)
-  await downloadFile(info.directUrls[options.resolution], path, createFileName(info, options.filePattern))
+  await downloadFile(info.directUrls[options.resolution], path, createEpisodeFileName(info, options.filePattern))
 }
 
 async function downloadSeason (url: string, path: string, options: DownloadOptionsDefined): Promise<void> {
@@ -82,6 +85,12 @@ async function downloadSeason (url: string, path: string, options: DownloadOptio
     await downloadEpisode(epInfo.url, path, options)
   }
 }
-const animeunity: AnimeExtractor = { createEpisodeInfo, createSeasonInfo, downloadEpisode, downloadSeason }
+
+const animeunity: AnimeExtractor = {
+  createEpisodeInfo,
+  createSeasonInfo,
+  downloadEpisode,
+  downloadSeason
+}
 
 export default animeunity
