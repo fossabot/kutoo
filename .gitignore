@@ -6,3 +6,4 @@ release
 coverage
 !lib/**/*
 .nyc_output
+tester
