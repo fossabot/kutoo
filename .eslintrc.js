@@ -1,5 +1,6 @@
 module.exports = {
     extends: 'standard-with-typescript',
+    plugins: ["jest"],
     parserOptions: {
         project: './tsconfig.json'
     },
@@ -7,5 +8,5 @@ module.exports = {
         'node': true,
         'jest': true
     },
-    ignorePatterns: [ 'node_modules/', 'temp/', 'test/', 'dist/', 'release/']
+    ignorePatterns: [ 'node_modules/', 'temp/', 'dist/', 'release/', 'tester']
 }
