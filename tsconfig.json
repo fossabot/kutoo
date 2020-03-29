@@ -19,9 +19,16 @@
         "target": "es2018", // Node.js 10
         "lib": [
             "esnext"
-        ]
+        ],
+        "baseUrl": "./src",
+        "paths": {
+            "@animekit/*": [
+                "*"
+            ]
+        }
     },
     "include": [
-        "src"
+        "src",
+        "test"
     ]
 }
