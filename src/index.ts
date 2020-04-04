@@ -1,8 +1,10 @@
-import { DownloadOptions, contentType, EpisodeInfo, SeasonInfo, PageInfo, ChapterInfo, VolumeInfo } from './types'
+import { DownloadOptions, contentType, EpisodeInfo, SeasonInfo, PageInfo, ChapterInfo, VolumeInfo, allInfo } from './types'
 
 import { selectExtractor } from './extractors'
 
 import { defaults } from './defaults'
+
+import downloader from './downloader'
 
 async function getInfo (url: string, content?: 'episode'): Promise<EpisodeInfo>
 async function getInfo (url: string, content?: 'season'): Promise<SeasonInfo>
@@ -32,32 +34,33 @@ async function getInfo (url: string, content?: contentType): Promise<any> {
   return info
 }
 
-async function download (url: string, path: string, options?: DownloadOptions): Promise<void> {
+async function download (info: allInfo, path: string, options?: DownloadOptions): Promise<void> {
   const opts = Object.assign(defaults, options)
-  switch (opts.content) {
+  info = await Promise.resolve(info)
+  switch (info.content) {
     case 'episode':
-      await selectExtractor(url, opts.content).downloadEpisode(url, path, opts)
+      await downloader.downloadEpisode(info, path, opts)
       break
     case 'season':
-      await selectExtractor(url, opts.content).downloadSeason(url, path, opts)
+      await downloader.downloadSeason(info, path, opts)
       break
     case 'page':
-      await selectExtractor(url, opts.content).downloadPage(url, path, opts)
+      await downloader.downloadPage(info, path, opts)
       break
     case 'chapter':
-      await selectExtractor(url, opts.content).downloadChapter(url, path, opts)
+      await downloader.downloadChapter(info, path, opts)
       break
     case 'volume':
-      await selectExtractor(url, opts.content).downloadVolume(url, path, opts)
+      await downloader.downloadVolume(info, path, opts)
       break
   }
 }
 
-const animekit = { download, getInfo }
+const kutoo = { download, getInfo }
 
 // Default export for typescript
-export default animekit
+export default kutoo
 
 // Exports for commonjs
-module.exports = animekit
-module.exports.default = animekit
+module.exports = kutoo
+module.exports.default = kutoo

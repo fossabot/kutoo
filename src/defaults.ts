@@ -5,5 +5,6 @@ export const defaults: DownloadOptionsDefined = {
   filePattern: '<title>_ep_<number>_<name>.<ext>',
   subtitles: 'embed',
   subtitlesLang: 'all',
-  resolution: 'fhd'
+  resolution: 'fhd',
+  ffmpeg: false
 }

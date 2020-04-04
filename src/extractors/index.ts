@@ -1,9 +1,9 @@
 import animeExtractors from './anime'
 import mangaExtractors from './manga'
 
-import { getDomain } from '../utils'
+import { getDomain } from '@kutoo/utils'
 import { animeSites, mangaSites } from './sites'
-import { AnimeExtractor, MangaExtractor, contentType } from '../types'
+import { AnimeExtractor, MangaExtractor, contentType } from '@kutoo/types'
 
 export function selectExtractor (url: string, content: 'episode' | 'season'): AnimeExtractor
 export function selectExtractor (url: string, content: 'page' | 'chapter' | 'volume'): MangaExtractor

@@ -1,62 +1,62 @@
 ## __Warning!__
-__This project is still at a very early stage, expect breaking change with update, code instability and many errors, if you decide to use this library please open a [issue](https://github.com/FedericoMorrone/animekit/issues) for any problem you might find__
+__This project is still at a very early stage, expect breaking change with update, code instability and many errors, if you decide to use this library please open a [issue](https://github.com/FedericoMorrone/kutoo/issues) for any problem you might find__
 
 
-# Animekit
-![build](https://github.com/FedericoMorrone/animekit/workflows/ci/badge.svg)
-[![npm version](https://badge.fury.io/js/animekit.svg)](https://badge.fury.io/js/animekit)
-[![codecov](https://codecov.io/gh/FedericoMorrone/animekit/branch/master/graph/badge.svg)](https://codecov.io/gh/FedericoMorrone/animekit)
+# kutoo
+![build](https://github.com/FedericoMorrone/kutoo/workflows/ci/badge.svg)
+[![npm version](https://badge.fury.io/js/kutoo.svg)](https://badge.fury.io/js/kutoo)
+[![codecov](https://codecov.io/gh/FedericoMorrone/kutoo/branch/master/graph/badge.svg)](https://codecov.io/gh/FedericoMorrone/kutoo)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-[![Known Vulnerabilities](https://snyk.io/test/github/FedericoMorrone/animekit/badge.svg?targetFile=package.json)](https://snyk.io/test/github/FedericoMorrone/animekit?targetFile=package.json)
-[![GitHub license](https://img.shields.io/github/license/FedericoMorrone/animekit)](https://github.com/FedericoMorrone/animekit/blob/master/LICENSE) 
+[![Known Vulnerabilities](https://snyk.io/test/github/FedericoMorrone/kutoo/badge.svg?targetFile=package.json)](https://snyk.io/test/github/FedericoMorrone/kutoo?targetFile=package.json)
+[![GitHub license](https://img.shields.io/github/license/FedericoMorrone/kutoo)](https://github.com/FedericoMorrone/kutoo/blob/master/LICENSE) 
 
 
 
-Animekit is an easy to use library to download anime and manga from various websites.
+kutoo is an easy to use library to download anime and manga from various websites.
 The main reason behind this project is to be able to consume anime and manga offline and without any intrussive ads or annoying popup.
-A desktop gui written in electron is avaible [here](https://github.com/FedericoMorrone/animekit-desktop) while a mobile port can be found [here](https://github.com/FedericoMorrone/animekit-mobile)
+A desktop gui written in electron is avaible [here](https://github.com/FedericoMorrone/kutoo-desktop) while a mobile port can be found [here](https://github.com/FedericoMorrone/kutoo-mobile)
 
 
 ## Install
 
-Download a pre-compiled binary [here](https://github.com/FedericoMorrone/animekit/releases)
+Download a pre-compiled binary [here](https://github.com/FedericoMorrone/kutoo/releases)
 
 or
 
-Install Animekit using [`yarn`](https://classic.yarnpkg.com/):
+Install kutoo using [`yarn`](https://classic.yarnpkg.com/):
 
 ```bash
-yarn add global animekit
+yarn add global kutoo
 ```
 
 with [`npm`](https://www.npmjs.com/):
 
 ```bash
-npm install animekit -g
+npm install kutoo -g
 ```
 for more installation istructions check [INSTALLATION](INSTALLATION.md)
 
 ## Command line usage
 ```bash
-animekit <url> -o <path>
+kutoo <url> -o <path>
 ```
 
 ## Pragmatic usage
 
-Using animekit is very simple, just call the download function with a url and a path
+Using kutoo is very simple, just call the download function with a url and a path
 
 ```javascript
-const animekit = require('animekit')
+const kutoo = require('kutoo')
 
 const url = 'https://www.legitstreaming.com/anime/bokunopico'
-animekit.download(url, './videos')
+kutoo.download(url, './videos')
 ```
 
 To get the information about an episode you can use the info method
 
 ```javascript
 const url = 'https://www.legitstreaming.com/anime/bokunopico'
-const info = await animekit.getInfo(url)
+const info = await kutoo.getInfo(url)
 ```
 
 This will return an EpisodeInfo object that looks like the following
@@ -93,4 +93,4 @@ This will return an EpisodeInfo object that looks like the following
 - [ ] Add proper documentation
 - [ ] Add support for more sites
 - [ ] Complete this readme file
-- [ ] Make [`gui`](https://github.com/FedericoMorrone/animekit-desktop) somewhat usable
+- [ ] Make [`gui`](https://github.com/FedericoMorrone/kutoo-desktop) somewhat usable

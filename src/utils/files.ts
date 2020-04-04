@@ -3,6 +3,8 @@ import fs from 'fs'
 import * as pathModule from 'path'
 
 import m3u8stream from 'm3u8stream'
+// @ts-ignore
+import { Parser } from 'm3u8-parser'
 import FfmpegCommand from 'fluent-ffmpeg'
 
 import sanitize from 'sanitize-filename'
@@ -10,7 +12,7 @@ import sanitize from 'sanitize-filename'
 import stream from 'stream'
 import { promisify } from 'util'
 
-import { EpisodeInfo, PageInfo } from '../types'
+import { EpisodeInfo, PageInfo } from '@kutoo/types'
 
 export const pipeline = promisify(stream.pipeline)
 
@@ -30,7 +32,6 @@ export function createEpisodeFileName (info: EpisodeInfo, filePattern: string, l
   let fileName = filePattern
     .replace(new RegExp('<number>', 'g'), info.number.toString())
     .replace(new RegExp('<title>', 'g'), info.title.replace(/-/g, ''))
-    .replace(new RegExp('<name>', 'g'), info.name.replace(/-/g, ''))
     .replace(new RegExp('<ext>', 'g'), info.ext)
     .replace(/\s/g, '')
   if (lowerCase) {
@@ -50,6 +51,16 @@ export function createPageFileName (info: PageInfo, filePattern: string, lowerCa
   return sanitize(fileName)
 }
 
+export async function parseManifest (url: string): Promise<any> {
+  const response = await got(url)
+  const parser = new Parser()
+
+  parser.push(response.body)
+  parser.end()
+
+  return parser.manifest
+}
+
 export function downloadManifest (url: string, fullPath: string, ffmpeg: boolean): void{
   if (!ffmpeg) {
     const stream = m3u8stream(url)
@@ -61,13 +72,17 @@ export function downloadManifest (url: string, fullPath: string, ffmpeg: boolean
         '-vcodec copy'
       ])
       .output(fullPath)
-      // .on('progress', (progress: any) => {
-
-      // })
+      .on('progress', (progress: any) => {
+        console.log(progress)
+      })
       .on('end', (err: Error, stdout: any, stderr: any) => {
         console.log('Finished processing', err, stdout, stderr)
       })
 
     command.run()
   }
+}
+
+export async function isDir (path: string): Promise<boolean> {
+  return !(await fs.promises.lstat(path)).isFile()
 }

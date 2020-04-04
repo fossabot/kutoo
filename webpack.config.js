@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
 
 const libraryConfig = {
   mode: 'production',
@@ -10,17 +11,18 @@ const libraryConfig = {
     rules: [
       {
         test: /\.ts$/,
-        use: 'ts-loader',
+        loader: 'ts-loader',
         exclude: /node_modules/
       }
     ]
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
+    plugins: [new TsconfigPathsPlugin()]
   },
   output: {
     filename: 'index.js',
-    library: 'animekit',
+    library: 'kutoo',
     libraryTarget: 'commonjs2',
     path: path.resolve(__dirname, 'dist')
   },
@@ -35,7 +37,7 @@ const libraryConfig = {
 const cliConfig = {
   mode: 'production',
   entry: './src/cli.ts',
-  externals: [{ animekit: '../lib' }, nodeExternals()],
+  externals: [{ kutoo: '../lib' }, nodeExternals()],
   plugins: [
     new webpack.BannerPlugin({
       banner: '#!/usr/bin/env node',
@@ -46,14 +48,13 @@ const cliConfig = {
     rules: [
       {
         test: /\.ts$/,
-        use: [
-          'ts-loader'
-        ]
+        loader: 'ts-loader'
       }
     ]
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
+    plugins: [new TsconfigPathsPlugin()]
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -74,14 +75,13 @@ const cliBundle = {
     rules: [
       {
         test: /\.ts$/,
-        use: [
-          'ts-loader'
-        ]
+        loader: 'ts-loader'
       }
     ]
   },
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
+    plugins: [new TsconfigPathsPlugin()]
   },
   output: {
     path: path.resolve(__dirname, 'release'),

@@ -1,116 +1,98 @@
-// import ffmpeg from 'fluent-ffmpeg'
 import got from 'got'
-// @ts-ignore
-import { Parser } from 'm3u8-parser'
+import cheerio from 'cheerio'
+import { Config } from './config'
+import { getConfig } from './helper'
 
-import { resolve as resolvePath } from 'path'
+import { EpisodeInfo, SeasonInfo, AnimeExtractor } from '@kutoo/types'
+import { parseManifest, switchResolution } from '@kutoo/utils'
 
-import { createEpisodeInfo, createSeasonInfo } from './helper'
-import { downloadManifest, createEpisodeFileName } from '../../../utils'
+export async function createEpisodeInfo (url: string): Promise<EpisodeInfo> {
+  const config: Config = await getConfig(url)
 
-import { EpisodeInfo, SeasonInfo, contentType, DownloadOptionsDefined } from '../../../types'
-
-async function getInfo (url: string, content: 'episode'): Promise<EpisodeInfo>
-async function getInfo (url: string, content: 'season'): Promise<SeasonInfo>
-async function getInfo (url: string, content: contentType): Promise<any> {
-  if (content === 'episode') {
-    return createEpisodeInfo(url)
-  } else if (content === 'season') {
-    return createSeasonInfo(url)
-  } else {
-    throw new Error()
-  }
-}
-
-async function downloadEpisode (url: string, path: string, options: DownloadOptionsDefined): Promise<void> {
-  const info = await getInfo(url, 'episode')
-  let videoWidth: number
-  let videoHeight: number
-
-  switch (options.resolution) {
-    case 'fhd': case 'uhd':
-      videoWidth = 1920
-      videoHeight = 1080
-      break
-    case 'hd':
-      videoWidth = 1280
-      videoHeight = 720
-      break
-    case 'sd':
-      videoWidth = 848
-      videoHeight = 480
-      break
-    case 'low':
-      videoWidth = 640
-      videoHeight = 360
-      break
-    case 'ulow':
-      videoWidth = 428
-      videoHeight = 240
-      break
-    default:
-      break
+  const info: EpisodeInfo = {
+    author: '',
+    content: 'episode',
+    url: url,
+    directUrlType: 'manifest',
+    duration: 0,
+    directUrls: {
+      uhd: null,
+      fhd: null,
+      hd: null,
+      sd: null,
+      low: null,
+      ulow: null
+    },
+    title: config.metadata.title,
+    number: parseFloat(config.metadata.episode_number),
+    ext: 'mp4',
+    subtitles: {
+      type: 'external'
+    }
   }
 
-  const parser = new Parser()
-  const response = await got(info.directUrls[options.resolution])
-  const streamUrl = response.body
-  parser.push(streamUrl)
-  parser.end()
-  const mainPlaylist = parser.manifest
-  const link = mainPlaylist.playlists.find((playlist: any) => {
-    return playlist.attributes.RESOLUTION.height === videoHeight &&
-            playlist.attributes.RESOLUTION.width === videoWidth
-  })
-  const fileName = createEpisodeFileName(info, options.filePattern)
-  downloadManifest(link.uri, resolvePath(path, fileName), true)
-}
-
-async function download (url: string, path: string, options: DownloadOptionsDefined): Promise<void> {
-  switch (options.content) {
-    case 'episode':
-      await downloadEpisode(url, path, options)
-      break
-    case 'season':
-      for (const episode of (await createSeasonInfo(url)).episodes) {
-        await downloadEpisode((await episode).url, path, options)
+  for (const stream of config.streams) {
+    if (stream.format === 'multitrack_adaptive_hls_v2' && stream.hardsub_lang == null) {
+      const parsedManifest = await parseManifest(stream.url)
+      for (const list of parsedManifest.playlists) {
+        const res = list.attributes.RESOLUTION
+        const switchedRes = switchResolution([res.width, res.height])
+        info.directUrls[switchedRes] = stream.url
       }
-      break
-    default:
-      throw new Error()
+    }
   }
+
+  for (const sub of config.subtitles) {
+    info.subtitles[sub.language] = sub.url
+  }
+
+  return info
 }
 
-// async function getSeasons(url: string) {
-//     const langRegex = /(?<=\.com)(.*)(?=\/)/
-//     url = url.replace(langRegex, '')
+export async function createSeasonInfo (url: string): Promise<SeasonInfo[]> {
+  const response = await got(url)
+  const $ = cheerio.load(response.body)
 
-//     let cookieJar = await setLanguageCookie('enUS')
+  const titleSelector = 'body > div.container.my-4 > div > div:nth-child(4) > ' +
+    'div.col-lg-4.col-sm-12.custom-padding-bottom > div > div.card-body.bg-light-gray > p:nth-child(2)'
 
-//     const response = await got(url, { cookieJar })
-//     const $ = cheerio.load(response.body)
+  const title = $(titleSelector).html() ?? ''
+    .replace('<b>TITOLO: </b>', '')
+    .replace(/\s\s+/g, ' ')
+    .replace(/\s/, '')
 
-//     let seasons: Season[] = []
+  const links: string[] = []
 
-//     $('#showview_content_videos > ul > li').each((i: number, el: CheerioElement) => {
-//         let title = $(el).children('a').attr('title')!
+  $('.ep-box > a').each((i: number, el: CheerioElement) => {
+    // eslint-disable-next-line
+      const href = $(el).attr('href')!
+    links.push(`https://www.animeunity.it/${href}`)
+  })
 
-//         let episodes: d.Episode[] = []
+  const info: SeasonInfo = {
+    content: 'season',
+    number: 0,
+    author: '',
+    url: '',
+    year: 0,
+    studio: '',
+    status: 'unknown',
+    episodesCount: 0,
+    title: title,
+    episodes: {}
+  }
 
-//         $(`#showview_content_videos > ul > li:has(a[title="${title}"]) > ul a`).each((i: number, el: CheerioElement) => {
-//             let link = 'https://www.crunchyroll.com' + $(el).attr('href')
+  for (const lnk of links) {
+    info.episodes[links.indexOf(lnk)].getInfo = async () => {
+      return await createEpisodeInfo(lnk)
+    }
+  }
 
-//             let episode = getEpisode(link)
+  return [info]
+}
+const crunchyroll: AnimeExtractor = {
+  createEpisodeInfo,
+  createSeasonInfo
+}
 
-//             episodes.push(episode)
-//         })
-//         seasons[i] = {
-//             title: title,
-//             episodes: episodes
-//         }
-//     });
-
-//     return seasons
-// }
-
-export default { download, getInfo }
+export default crunchyroll

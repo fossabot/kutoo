@@ -1,7 +1,7 @@
-import nhentai from './nhentai'
+// import nhentai from './nhentai'
 
-import { ExtractorsArray } from '../../types'
+import { ExtractorsArray } from '@kutoo/types'
 
-const extractors: ExtractorsArray = { nhentai }
+const extractors: ExtractorsArray = { }
 
 export default extractors

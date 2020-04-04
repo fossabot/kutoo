@@ -1,5 +1,5 @@
 import animeunity from './animeunity'
-// import crunchyroll from './crunchyroll'
+import crunchyroll from './crunchyroll'
 // import animeflix from './animeflix'
 import { ExtractorsArray } from '../../types'
 // import nyaatorrent from './nyaatorrent'
@@ -8,6 +8,6 @@ import { ExtractorsArray } from '../../types'
 
 // import { DownloadOptionsDefined } from '../types'
 
-const extractors: ExtractorsArray = { animeunity }
+const extractors: ExtractorsArray = { animeunity, crunchyroll }
 
 export default extractors

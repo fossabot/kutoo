@@ -1,5 +1,5 @@
 import { createEpisodeFileName } from '../../src/utils/files'
-import {EpisodeInfo} from '../../src/types'
+import { EpisodeInfo } from '../../src/types'
 
 // import nock from 'nock'
 
@@ -9,34 +9,34 @@ import {EpisodeInfo} from '../../src/types'
 //     'Content-Type': 'application/json',
 //   })
 
-describe('createFileName', ()=>{
-    const info: EpisodeInfo = {
-        url: '',
-        directUrlType: 'video',
-        directUrls:{
-            uhd: '',
-            fhd:'',
-            hd:'',
-            sd:'',
-            low:'',
-            ulow:''
-        },
-        duration: 0,
-        resolution: ['fhd'],
-        title: 'Amazing Anime',
-        name: 'Best Episode',
-        number: 1,
-        ext: 'mp4',
-        subtitles: {
-            type: 'burned'
-        }
+describe('createFileName', () => {
+  const info: EpisodeInfo = {
+    content: 'episode',
+    author: '',
+    url: '',
+    directUrlType: 'video',
+    directUrls: {
+      uhd: '',
+      fhd: '',
+      hd: '',
+      sd: '',
+      low: '',
+      ulow: ''
+    },
+    duration: 0,
+    title: 'Amazing Anime',
+    number: 1,
+    ext: 'mp4',
+    subtitles: {
+      type: 'burned'
     }
-    const pattern = '<title>_ep_<number>_<name>.<ext>'
-    it('returns a filename from a given pattern', ()=>{
-        expect(createEpisodeFileName(info, pattern)).toBe('AmazingAnime_ep_1_BestEpisode.mp4')
-    })
+  }
+  const pattern = '<title>_ep_<number>_<name>.<ext>'
+  it('returns a filename from a given pattern', () => {
+    expect(createEpisodeFileName(info, pattern)).toBe('AmazingAnime_ep_1_name.mp4')
+  })
 
-    it('returns a filename from a given pattern lowercase', ()=>{
-        expect(createEpisodeFileName(info, pattern, true)).toBe('amazinganime_ep_1_bestepisode.mp4')
-    })
+  it('returns a filename from a given pattern lowercase', () => {
+    expect(createEpisodeFileName(info, pattern, true)).toBe('amazinganime_ep_1_name.mp4')
+  })
 })
