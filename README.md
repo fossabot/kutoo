@@ -26,7 +26,7 @@ or
 Install kutoo using [`yarn`](https://classic.yarnpkg.com/):
 
 ```bash
-yarn add global kutoo
+yarn global add kutoo
 ```
 
 with [`npm`](https://www.npmjs.com/):
