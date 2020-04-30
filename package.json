@@ -12,7 +12,8 @@
     "m3u8stream": "^0.6.5",
     "sanitize-filename": "^1.6.3",
     "tough-cookie": "^4.0.0",
-    "yargs": "^15.3.1"
+    "yargs": "^15.3.1",
+    "snyk": "^1.316.1"
   },
   "optionalDependencies": {
     "fluent-ffmpeg": "git://github.com/schaermu/node-fluent-ffmpeg.git"
@@ -54,7 +55,7 @@
     "test": "yarn lint && tsc --noEmit && jest",
     "start:cli": "ts-node src/cli.ts",
     "start:example": "ts-node --files src/examples/index.ts",
-    "prepare": "yarn build",
+    "prepare": "yarn run snyk-protect && yarn build",
     "postpublish": "yarn package:all",
     "release": "np",
     "build": "yarn clean && webpack",
@@ -63,7 +64,8 @@
     "package:win": "pkg --targets node12-win --output release/animekit-win release/cli.bundle.js",
     "package:win:x86": "pkg --targets node12-win-x86 --output release/animekit-win-x86 release/cli.bundle.js",
     "package:macos": "pkg --targets node12-macos --output release/animekit-macos release/cli.bundle.js",
-    "dist": "yarn build && yarn package:all"
+    "dist": "yarn build && yarn package:all",
+    "snyk-protect": "snyk protect"
   },
   "files": [
     "dist/",
@@ -83,5 +85,6 @@
     "scraping"
   ],
   "repository": "https://github.com/FedericoMorrone/animekit.git",
-  "author": "Federico Morrone <flickmor@gmail.com>"
+  "author": "Federico Morrone <flickmor@gmail.com>",
+  "snyk": true
 }
