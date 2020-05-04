@@ -8,7 +8,8 @@ __This project is still at a very early stage, expect breaking change with updat
 [![codecov](https://codecov.io/gh/FedericoMorrone/animekit/branch/master/graph/badge.svg)](https://codecov.io/gh/FedericoMorrone/animekit)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![Known Vulnerabilities](https://snyk.io/test/github/FedericoMorrone/animekit/badge.svg?targetFile=package.json)](https://snyk.io/test/github/FedericoMorrone/animekit?targetFile=package.json)
-[![GitHub license](https://img.shields.io/github/license/FedericoMorrone/animekit)](https://github.com/FedericoMorrone/animekit/blob/master/LICENSE) 
+[![GitHub license](https://img.shields.io/github/license/FedericoMorrone/animekit)](https://github.com/FedericoMorrone/animekit/blob/master/LICENSE) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FFedericoMorrone%2Fkutoo.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FFedericoMorrone%2Fkutoo?ref=badge_shield)
+
 
 
 
@@ -94,3 +95,7 @@ This will return an EpisodeInfo object that looks like the following
 - [ ] Add support for more sites
 - [ ] Complete this readme file
 - [ ] Make [`gui`](https://github.com/FedericoMorrone/animekit-desktop) somewhat usable
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FFedericoMorrone%2Fkutoo.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FFedericoMorrone%2Fkutoo?ref=badge_large)
